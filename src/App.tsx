@@ -13,7 +13,7 @@ function App() {
       <BrowserRouter>
         <NavBar />
 
-        <div>
+        <div className="ml-40">
           <Routes>
             <Route path="/" element={<Dashboard />} />
             <Route path="/add-patient" element={<AddPatient />} />

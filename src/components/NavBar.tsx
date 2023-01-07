@@ -2,15 +2,21 @@ import { NavLink } from "react-router-dom";
 
 const NavBar: React.FC = () => {
   return (
-    <ul>
+    <ul className="fixed top-0 left-0 bottom-0 text-gray-600 min-h-screen flex flex-col gap-10 bg-white rounded-r-xl py-10 [&>*]:[&>*]:flex [&>*]:[&>*]:px-4 [&>*]:[&>*]:py-1  text-lg">
       <li>
-        <NavLink to={"/"}>dashboard</NavLink>
+        <NavLink className="" to={"/"}>
+          dashboard
+        </NavLink>
       </li>
       <li>
-        <NavLink to={"/add-patient"}>add patient</NavLink>
+        <NavLink className="" to={"/add-patient"}>
+          add patient
+        </NavLink>
       </li>
       <li>
-        <NavLink to={"/schedule"}>schedule</NavLink>
+        <NavLink className="" to={"/schedule"}>
+          schedule
+        </NavLink>
       </li>
     </ul>
   );
