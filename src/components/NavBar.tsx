@@ -6,6 +6,8 @@ import { AiOutlineUserAdd } from "react-icons/ai";
 
 import { MdSchedule } from "react-icons/Md";
 
+import { BsPeople } from "react-icons/Bs";
+
 const NavBar: React.FC = () => {
   return (
     <div className="flex flex-col w-48  fixed top-0 left-0 bottom-0 min-h-screen border-r ">
@@ -35,6 +37,15 @@ const NavBar: React.FC = () => {
             <p>Schedule</p>
           </NavLink>
         </li>
+
+        <li>
+          <NavLink className="" to={"/all-patients"}>
+            <BsPeople />
+
+            <p> All Patients</p>
+          </NavLink>
+        </li>
+
         <li>
           <NavLink className="" to={"/add-patient"}>
             <AiOutlineUserAdd />

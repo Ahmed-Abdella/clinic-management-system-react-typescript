@@ -6,6 +6,7 @@ import "./App.css";
 import AddPatient from "./pages/AddPatient";
 import Dashboard from "./pages/Dashboard";
 import Schedule from "./pages/Schedule";
+import AllPatients from "./pages/AllPatients";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
             <Route path="/" element={<Dashboard />} />
             <Route path="/add-patient" element={<AddPatient />} />
             <Route path="/schedule" element={<Schedule />} />
+            <Route path="/all-patients" element={<AllPatients />} />
           </Routes>
         </div>
       </BrowserRouter>
