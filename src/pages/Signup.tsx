@@ -105,24 +105,25 @@ export default function Signup() {
   };
 
   return (
-    <div className="px-96 py-6">
+    <div className="px-96 pt-6 pb-12">
+      <h2 className="text-center text-2xl mb-6">Create Your Account</h2>
       <form
-        className="flex flex-col gap-20 border-2 bg-white shadow-lg rounded-lg p-6"
+        className="flex flex-col gap-10  bg-white [&>label]:flex [&>label]:flex-col [&>label>span]:text-sm [&_input]:h-10 [&_input]:p-2 [&_input]:mt-1  [&_input]:bg-sky-50 focus:[&_input]:border-b-2 [&_input]:outline-none [&_input]:border-b-2 [&_input]:border-sky-200  focus:[&_input]:border-sky-600  shadow-lg rounded-lg p-6"
         onSubmit={handleSubmit}
       >
-        <h2>Create Your Account</h2>
-
         <label>
           <span>First Name:</span>
           <input
-            className={firstNameHasError ? "input-with-error" : ""}
+            className={`outline-none ${
+              firstNameHasError ? "input-with-error" : ""
+            }`}
             type="text"
             value={firstName}
             onChange={firstNameChangeHandler}
             onBlur={firstNameBlurHandler}
           ></input>
           {firstNameHasError && (
-            <div className="error">First Name is Required</div>
+            <div className="text-red-500 text-sm">First Name is Required</div>
           )}
         </label>
 
@@ -136,7 +137,7 @@ export default function Signup() {
             onBlur={lastNameBlurHandler}
           ></input>
           {lastNameHasError && (
-            <div className="error">Last Name is Required</div>
+            <div className="text-red-500 text-sm">Last Name is Required</div>
           )}
         </label>
 
@@ -149,7 +150,9 @@ export default function Signup() {
             onChange={emailChangeHandler}
             onBlur={emailBlurHandler}
           ></input>
-          {emailHasError && <div className="error">Invalid Email Address</div>}
+          {emailHasError && (
+            <div className="text-red-500 text-sm">Invalid Email Address</div>
+          )}
         </label>
         <label>
           <span>Password:</span>
@@ -161,7 +164,7 @@ export default function Signup() {
             onBlur={passwordBlurHandler}
           ></input>
           {passwordHasError && (
-            <div className="error">
+            <div className="text-red-500 text-sm">
               Password must be at least 8 characters, no more than 15
               characters, and must include at least one upper case letter, one
               lower case letter, and one numeric digit.
@@ -180,7 +183,7 @@ export default function Signup() {
             }}
           ></input>
           {confirmedPasswordError && (
-            <div className="error">
+            <div className="text-red-500 text-sm">
               Password and confirmation password should be the same
             </div>
           )}
@@ -188,8 +191,8 @@ export default function Signup() {
 
         <label>
           <span>Phone Number (international format):</span>
+
           <PhoneInput
-            className={phoneNumberHasError ? "phone-input-with-error" : ""}
             international
             placeholder="Enter your phone number"
             value={phoneNumber}
@@ -203,16 +206,24 @@ export default function Signup() {
             onCountryChange={() => setCountry}
             onBlur={() => setPhoneNumberIsTouched(true)}
           />
+
           {phoneNumberHasError && (
-            <div className="error">Invalid Phone Number</div>
+            <div className="text-red-500 text-sm">Invalid Phone Number</div>
           )}
         </label>
 
-        <button className="btn">Signup</button>
-        <p>
-          already have an account? <Link to="/login"> login</Link>
-        </p>
+        <button className="bg-sky-600 text-white p-2 rounded-lg hover:bg-sky-700 transition duration-200">
+          Signup
+        </button>
       </form>
+
+      <p className="mt-4   ">
+        already have an account?{" "}
+        <Link className="text-sky-600 hover:underline" to="/login">
+          {" "}
+          login
+        </Link>
+      </p>
     </div>
   );
 }
