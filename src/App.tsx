@@ -17,7 +17,7 @@ function App() {
       <BrowserRouter>
         <NavBar />
 
-        <div className=" ml-48 lg:ml-4">
+        <div className=" ml-48 ">
           <Header />
           <Routes>
             <Route path="/" element={<Dashboard />} />
