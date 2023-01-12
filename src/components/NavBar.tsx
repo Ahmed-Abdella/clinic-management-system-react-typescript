@@ -10,7 +10,7 @@ import { BsPeople } from "react-icons/Bs";
 
 const NavBar: React.FC = () => {
   return (
-    <div className="flex flex-col w-48  fixed top-0 left-0 bottom-0 min-h-screen border-r ">
+    <div className="flex flex-col w-48  fixed top-0 left-0 bottom-0 min-h-screen border-r lg:translate-x-[-20rem] transition duration-500 ">
       <div className="w-full flex flex-col items-center px-2 mt-10">
         <div className="inline-block  h-16 w-16 rounded-full overflow-hidden">
           <img

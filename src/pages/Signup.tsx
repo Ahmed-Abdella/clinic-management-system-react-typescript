@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import useInput from "../hooks/useinput";
+import useInput from "../hooks/useInput";
 
 import PhoneInput from "react-phone-number-input";
 import "react-phone-number-input/style.css";
@@ -105,10 +105,10 @@ export default function Signup() {
   };
 
   return (
-    <div className="px-96 pt-6 pb-12">
+    <div className="px-80 xl:px-44 lg:px-32 md:px-12 sm:px-4 pt-6 pb-12">
       <h2 className="text-center text-2xl mb-6">Create Your Account</h2>
       <form
-        className="flex flex-col gap-10  bg-white [&>label]:flex [&>label]:flex-col [&>label>span]:text-sm [&_input]:h-10 [&_input]:p-2 [&_input]:mt-1  [&_input]:bg-sky-50 focus:[&_input]:border-b-2 [&_input]:outline-none [&_input]:border-b-2 [&_input]:border-sky-200  focus:[&_input]:border-sky-600  shadow-lg rounded-lg p-6"
+        className="flex flex-col  gap-10  bg-white [&>label]:flex [&>label]:flex-col [&>label>span]:text-sm [&_input]:h-10 [&_input]:p-2 [&_input]:mt-1  [&_input]:bg-sky-50 focus:[&_input]:border-b-2 [&_input]:outline-none [&_input]:border-b-2 [&_input]:border-transparent   focus:[&_input]:border-sky-600  shadow-lg rounded-lg p-6"
         onSubmit={handleSubmit}
       >
         <label>
@@ -219,7 +219,10 @@ export default function Signup() {
 
       <p className="mt-4   ">
         already have an account?{" "}
-        <Link className="text-sky-600 hover:underline" to="/login">
+        <Link
+          className="text-sky-600 hover:underline font-semibold"
+          to="/login"
+        >
           {" "}
           login
         </Link>
