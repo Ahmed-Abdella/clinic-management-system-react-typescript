@@ -224,7 +224,9 @@ export default function Signup() {
       </form>
 
       {error && (
-        <p className="bg-red-100 text-red-600 py-4 px-6 mt-4">{error}</p>
+        <p className="bg-red-100 text-red-600 py-4 px-6 mt-4 rounded-lg">
+          {error}
+        </p>
       )}
 
       <p className="mt-4   ">

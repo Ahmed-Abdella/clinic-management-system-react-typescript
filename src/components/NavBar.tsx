@@ -8,7 +8,10 @@ import { MdSchedule } from "react-icons/Md";
 
 import { BsPeople } from "react-icons/Bs";
 
+import { useLogout } from "../hooks/useLogout";
+
 const NavBar: React.FC = () => {
+  const { logout } = useLogout();
   return (
     <div className="flex flex-col w-48  fixed top-0 left-0 bottom-0 min-h-screen border-r lg:translate-x-[-20rem] transition duration-500 ">
       <div className="w-full flex flex-col items-center px-2 mt-10">
@@ -54,6 +57,13 @@ const NavBar: React.FC = () => {
           </NavLink>
         </li>
       </ul>
+
+      <button
+        className="self-left  text-white  mx-16 py-1 rounded-lg bg-sky-500 mt-auto mb-10 hover:shadow"
+        onClick={logout}
+      >
+        logout
+      </button>
     </div>
   );
 };
