@@ -14,7 +14,6 @@ const Header = () => {
               Login
             </Link>
           </li>
-          <span className="font-bold text-lg text-sky-900">/</span>
 
           <li className="">
             <Link

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useSignup } from "../hooks/useSignup";
 
 import useInput from "../hooks/useInput";
 
@@ -10,7 +11,10 @@ import { getCountryCallingCode } from "react-phone-number-input";
 import { Link } from "react-router-dom";
 
 export default function Signup() {
+  const { error, signup } = useSignup();
+
   // USING A CUSTOM HOOK TO VALIDATE MY CUSTOM INPUT________
+  // AND USE DESTRUCTION TO SAVE VALUES IN CONSTS LIKE (EMAIL, PASSWORD)
 
   const {
     value: firstName,
@@ -102,6 +106,8 @@ export default function Signup() {
       phoneNumber,
       typeof phoneNumber
     );
+
+    signup(email, password);
   };
 
   return (
@@ -216,6 +222,10 @@ export default function Signup() {
           Signup
         </button>
       </form>
+
+      {error && (
+        <p className="bg-red-100 text-red-600 py-4 px-6 mt-4">{error}</p>
+      )}
 
       <p className="mt-4   ">
         already have an account?{" "}
