@@ -1,13 +1,16 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
+import { useLogin } from "../hooks/useLogin";
+
 export default function Login() {
+  const { login, error } = useLogin();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log(email, password);
+    login(email, password);
   };
   return (
     <div className="px-80 xl:px-44 lg:px-32 md:px-12 sm:px-4 pt-6 pb-12">
@@ -39,6 +42,13 @@ export default function Login() {
           Login
         </button>
       </form>
+
+      {error && (
+        <p className="bg-red-100 text-red-600 py-4 px-6 mt-4 rounded-lg">
+          {error}
+        </p>
+      )}
+
       <p className="mt-4 ">
         You don't have an account yet?{" "}
         <Link
