@@ -15,7 +15,7 @@ function App() {
   return (
     <div className="font-sans bg-sky-50 min-h-screen ">
       <BrowserRouter>
-        <NavBar />
+        {<NavBar />}
 
         <div className=" ml-48 lg:ml-4 ">
           <Header />

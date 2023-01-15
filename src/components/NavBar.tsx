@@ -10,6 +10,8 @@ import { BsPeople } from "react-icons/Bs";
 
 import { useLogout } from "../hooks/useLogout";
 
+import { BiLogOutCircle } from "react-icons/Bi";
+
 const NavBar: React.FC = () => {
   const { logout } = useLogout();
   return (
@@ -59,10 +61,11 @@ const NavBar: React.FC = () => {
       </ul>
 
       <button
-        className="self-left  text-white  mx-16 py-1 rounded-lg bg-sky-500 mt-auto mb-10 hover:shadow"
+        className="flex jusitify-center items-center self-left  text-gray-700 hover:text-black transition duration-100  self-center [&>*]:mr-1  mt-auto mb-10 "
         onClick={logout}
       >
-        logout
+        <BiLogOutCircle />
+        <span className="text-sm">logout</span>
       </button>
     </div>
   );

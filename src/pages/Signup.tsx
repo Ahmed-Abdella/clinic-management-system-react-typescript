@@ -11,7 +11,7 @@ import { getCountryCallingCode } from "react-phone-number-input";
 import { Link } from "react-router-dom";
 
 export default function Signup() {
-  const { error, signup } = useSignup();
+  const { error, signup, isPending } = useSignup();
 
   // USING A CUSTOM HOOK TO VALIDATE MY CUSTOM INPUT________
   // AND USE DESTRUCTION TO SAVE VALUES IN CONSTS LIKE (EMAIL, PASSWORD)
@@ -222,6 +222,8 @@ export default function Signup() {
           Signup
         </button>
       </form>
+
+      {isPending && <p className="text-lg text-sky-700">signup...</p>}
 
       {error && (
         <p className="bg-red-100 text-red-600 py-4 px-6 mt-4 rounded-lg">

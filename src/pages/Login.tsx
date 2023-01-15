@@ -4,11 +4,11 @@ import { Link } from "react-router-dom";
 import { useLogin } from "../hooks/useLogin";
 
 export default function Login() {
-  const { login, error } = useLogin();
+  const { login, error, isPending } = useLogin();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     login(email, password);
   };
@@ -42,6 +42,8 @@ export default function Login() {
           Login
         </button>
       </form>
+
+      {isPending && <p className="text-lg text-sky-500">Loging in.......</p>}
 
       {error && (
         <p className="bg-red-100 text-red-600 py-4 px-6 mt-4 rounded-lg">
