@@ -15,7 +15,7 @@ import { BiLogOutCircle } from "react-icons/Bi";
 const NavBar: React.FC = () => {
   const { logout } = useLogout();
   return (
-    <div className="flex flex-col w-48  fixed top-0 left-0 bottom-0 min-h-screen border-r lg:translate-x-[-20rem] transition duration-500 ">
+    <div className="flex flex-col w-48  fixed top-0 left-0 bottom-0 min-h-screen border-r lg:translate-x-[-20rem] transition duration-500  [&_svg]:text-sky-600 ">
       <div className="w-full flex flex-col items-center px-2 mt-10">
         <div className="inline-block  h-16 w-16 rounded-full overflow-hidden">
           <img
@@ -25,7 +25,10 @@ const NavBar: React.FC = () => {
           />
         </div>
 
-        <p className="w-36 text-sm  text-center">Dr.Sara Ahmed Mohamed</p>
+        <p className="w-36 text-sm  text-center">
+          <span className="font-semibold">Dr.</span>
+          {`Sara Ahmed Mohamed`}
+        </p>
       </div>
 
       <ul className=" text-gray-600 text-base  flex flex-col gap-2   py-10 [&>*]:[&>*]:flex [&>*]:[&>*]:items-center [&>*]:[&>*]:[&>*]:mr-4 [&>*]:[&>*]:px-4 [&>*]:[&>*]:py-1 [&>*]:[&>*]:border-r-4 [&>*]:[&>*]:border-transparent   [&>*]:[&>*]:rounded-r-sm w-full   ">
@@ -61,11 +64,11 @@ const NavBar: React.FC = () => {
       </ul>
 
       <button
-        className="flex jusitify-center items-center self-left  text-gray-700 hover:text-black transition duration-100  self-center [&>*]:mr-1  mt-auto mb-10 "
+        className="text-sm flex jusitify-center items-center self-left  text-gray-700 hover:text-black transition duration-100  self-center [&>*]:mr-1  mt-auto mb-10 "
         onClick={logout}
       >
         <BiLogOutCircle />
-        <span className="text-sm">logout</span>
+        <span className="">logout</span>
       </button>
     </div>
   );

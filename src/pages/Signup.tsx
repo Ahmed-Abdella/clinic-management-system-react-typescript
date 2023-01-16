@@ -114,7 +114,7 @@ export default function Signup() {
     <div className="px-80 xl:px-44 lg:px-32 md:px-12 sm:px-4 pt-6 pb-12">
       <h2 className="text-center text-2xl mb-6">Create Your Account</h2>
       <form
-        className="flex flex-col  gap-10  bg-white [&>label]:flex [&>label]:flex-col [&>label>span]:text-sm [&_input]:h-10 [&_input]:p-2 [&_input]:mt-1  [&_input]:bg-sky-50 hover:[&_input]:bg-sky-100 focus:[&_input]:border-b-2 [&_input]:outline-none [&_input]:border-b-2 [&_input]:border-transparent   focus:[&_input]:border-sky-600  shadow-lg rounded-lg p-6"
+        className="flex flex-col  gap-10  bg-white [&>label]:flex [&>label]:flex-col [&>label>span]:text-sm [&_input]:h-10 [&_input]:p-2 [&_input]:mt-1  [&_input]:bg-sky-50 hover:[&_input]:bg-sky-100 focus:[&_input]:border-b-2 [&_input]:outline-none [&_input]:border-b-2 [&_input]:border-transparent   focus:[&_input]:border-sky-600 focus:[&_input]:bg-sky-100 shadow-lg rounded-lg p-6"
         onSubmit={handleSubmit}
       >
         <label>
