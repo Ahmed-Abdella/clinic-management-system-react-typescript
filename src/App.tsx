@@ -20,7 +20,7 @@ function App() {
         <BrowserRouter>
           {user && <NavBar />}
 
-          <div className={`${user ? " ml-48" : "ml-2"}`}>
+          <div className={`${user ? " ml-48 lg:ml-2" : "ml-2"} `}>
             <Header />
             <Routes>
               <Route path="/" element={user ? <Dashboard /> : <Login />} />

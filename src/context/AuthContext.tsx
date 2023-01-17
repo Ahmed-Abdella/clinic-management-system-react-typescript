@@ -4,9 +4,27 @@ import { auth } from "../firebase";
 
 import { onAuthStateChanged } from "firebase/auth";
 
+import { MultiFactorUser, User } from "firebase/auth";
+
+// enum ActionTypeKind {
+//   LOGIN = "LOGIN",
+//   LOGOUT = "LOGOUT",
+//   AUTH_IS_READY = "AUTH_IS_READY",
+// }
+
+interface initialStateType {
+  authIsReady: boolean;
+  user: User | null;
+}
+
+interface actionType {
+  type: string;
+  payload: User | null;
+}
+
 interface authContextType {
   authIsReady: boolean;
-  user: any;
+  user: User | null;
   dispatch?: any;
 }
 
@@ -15,7 +33,7 @@ export const AuthContext = createContext<authContextType>({
   authIsReady: false,
 });
 
-export const authReducer = (state: any, action: any) => {
+export const authReducer = (state: authContextType, action: actionType) => {
   switch (action.type) {
     case "LOGIN":
       return { ...state, user: action.payload };
