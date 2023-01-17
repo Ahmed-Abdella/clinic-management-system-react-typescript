@@ -4,12 +4,13 @@ import { auth } from "../firebase";
 
 import { onAuthStateChanged } from "firebase/auth";
 
-interface authContext {
+interface authContextType {
   authIsReady: boolean;
   user: any;
+  dispatch?: any;
 }
 
-export const AuthContext = createContext<authContext>({
+export const AuthContext = createContext<authContextType>({
   user: null,
   authIsReady: false,
 });

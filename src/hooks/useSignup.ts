@@ -3,6 +3,7 @@ import { useState } from "react";
 import { auth } from "../firebase";
 
 import { createUserWithEmailAndPassword } from "firebase/auth";
+import { useAuthContext } from "./useAuthContext";
 
 export const useSignup = () => {
   // const [error, setError] = useState<string | null>(null);
@@ -23,6 +24,7 @@ export const useSignup = () => {
 
   const [error, setError] = useState<string | null>(null);
   const [isPending, setIsPending] = useState(false);
+  const { dispatch } = useAuthContext();
 
   const signup = async (email: string, password: string) => {
     setError(null);
@@ -31,7 +33,7 @@ export const useSignup = () => {
     try {
       const res = await createUserWithEmailAndPassword(auth, email, password);
 
-      console.log(res.user);
+      dispatch({ type: "LOGIN", payload: res.user });
 
       setIsPending(false);
       setError(null);

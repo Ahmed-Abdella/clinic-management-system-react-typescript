@@ -5,10 +5,13 @@ import { auth } from "../firebase";
 import { useNavigate } from "react-router-dom";
 
 import { signInWithEmailAndPassword } from "firebase/auth";
+import { useAuthContext } from "./useAuthContext";
 
 export const useLogin = () => {
   const [error, setError] = useState<string | null>(null);
   const [isPending, setIsPending] = useState(false);
+
+  const { dispatch } = useAuthContext();
 
   const login = async (email: string, password: string) => {
     setError(null);
@@ -17,7 +20,7 @@ export const useLogin = () => {
     try {
       const res = await signInWithEmailAndPassword(auth, email, password);
 
-      console.log(res.user);
+      dispatch({ type: "LOGIN", payload: res.user });
 
       setIsPending(false);
       setError(null);

@@ -10,25 +10,44 @@ import AllPatients from "./pages/AllPatients";
 import Signup from "./pages/Signup";
 import Login from "./pages/Login";
 import Header from "./components/Header";
+import { useAuthContext } from "./hooks/useAuthContext";
 
 function App() {
+  const { user, authIsReady } = useAuthContext();
   return (
     <div className="font-sans bg-sky-50 min-h-screen ">
-      <BrowserRouter>
-        {<NavBar />}
+      {authIsReady && (
+        <BrowserRouter>
+          {user && <NavBar />}
 
-        <div className=" ml-48 lg:ml-4 ">
-          <Header />
-          <Routes>
-            <Route path="/" element={<Dashboard />} />
-            <Route path="/add-patient" element={<AddPatient />} />
-            <Route path="/schedule" element={<Schedule />} />
-            <Route path="/all-patients" element={<AllPatients />} />
-            <Route path="/signup" element={<Signup />} />
-            <Route path="/login" element={<Login />} />
-          </Routes>
-        </div>
-      </BrowserRouter>
+          <div className={`${user ? " ml-48" : "ml-2"}`}>
+            <Header />
+            <Routes>
+              <Route path="/" element={user ? <Dashboard /> : <Login />} />
+              <Route
+                path="/add-patient"
+                element={user ? <AddPatient /> : <Login />}
+              />
+              <Route
+                path="/schedule"
+                element={user ? <Schedule /> : <Login />}
+              />
+              <Route
+                path="/all-patients"
+                element={user ? <AllPatients /> : <Login />}
+              />
+              <Route
+                path="/signup"
+                element={!user ? <Signup /> : <Dashboard />}
+              />
+              <Route
+                path="/login"
+                element={!user ? <Login /> : <Dashboard />}
+              />
+            </Routes>
+          </div>
+        </BrowserRouter>
+      )}
     </div>
   );
 }
