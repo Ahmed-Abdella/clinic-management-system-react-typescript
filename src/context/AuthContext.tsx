@@ -1,4 +1,4 @@
-import React, { createContext, useReducer, useEffect, ReactNode } from "react";
+import { createContext, useReducer, useEffect, ReactNode } from "react";
 
 import { auth } from "../firebase";
 
@@ -12,10 +12,10 @@ import { MultiFactorUser, User } from "firebase/auth";
 //   AUTH_IS_READY = "AUTH_IS_READY",
 // }
 
-interface initialStateType {
-  authIsReady: boolean;
-  user: User | null;
-}
+// interface initialStateType {
+//   authIsReady: boolean;
+//   user: User | null;
+// }
 
 interface actionType {
   type: string;
