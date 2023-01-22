@@ -12,7 +12,7 @@ const AddPatient: React.FC = () => {
   };
   return (
     <form
-      className="flex flex-col w-full px-24 [&_label]:mt-6 [&_label]:flex [&_label]:flex-col [&_input]:mt-1 [&_input]:p-2 [&_input]:shadow [&_input]:rounded-lg [&_input]:outline-sky-600 hover:[&_input]:bg-slate-50"
+      className="flex flex-col w-full px-36 pb-6 [&_label]:mt-6 [&_label]:flex [&_label]:flex-col [&_input]:mt-1 [&_input]:p-2 [&_input]:shadow [&_input]:rounded-lg [&_input]:outline-sky-600 "
       onSubmit={handleSubmit}
     >
       <label>
@@ -41,7 +41,7 @@ const AddPatient: React.FC = () => {
         <span>Diagnosis:</span>
 
         <textarea
-          className="mt-1 p-4 rounded-lg shadow-lg outline-sky-600"
+          className="h-48 mt-1 p-4 rounded-lg shadow-lg outline-sky-600"
           value={diagnosis}
           onChange={(e) => setDiagnosis(e.target.value)}
         ></textarea>

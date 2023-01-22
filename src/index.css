@@ -38,4 +38,5 @@ button:focus-visible {
 
 .input-with-error {
   background: rgb(254 242 242) !important;
+  border-color: rgb(214, 54, 54) !important ;
 }
