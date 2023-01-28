@@ -7,6 +7,7 @@ const AddPatient: React.FC = () => {
   const [patientAge, setPatientAge] = useState<number | string>("");
   const [gender, setGender] = useState<string>("");
   const [diagnosis, setDiagnosis] = useState<string>("");
+  const [notes, setNotes] = useState<string>("");
 
   const [newSpice, setNewSpice] = useState<string>("");
   const [spices, setSpices] = useState<string[]>([]);
@@ -41,7 +42,7 @@ const AddPatient: React.FC = () => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
 
-    console.log(patientName, patientAge, diagnosis, gender, spices);
+    console.log(patientName, patientAge, diagnosis, notes, gender, spices);
   };
   return (
     <form
@@ -100,6 +101,16 @@ const AddPatient: React.FC = () => {
           className="bg-gray-50 h-48 mt-1 p-4 border-b border-sky-600  outline-none"
           value={diagnosis}
           onChange={(e) => setDiagnosis(e.target.value)}
+        ></textarea>
+      </label>
+
+      <label>
+        <span>Notes:</span>
+
+        <textarea
+          className="bg-gray-50  mt-1 p-4 border-b border-sky-600  outline-none"
+          value={notes}
+          onChange={(e) => setNotes(e.target.value)}
         ></textarea>
       </label>
 
