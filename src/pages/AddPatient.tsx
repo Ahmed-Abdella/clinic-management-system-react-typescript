@@ -1,4 +1,6 @@
-import { useState, useRef } from "react";
+import React, { useState, useRef } from "react";
+
+import { RxCross2 } from "react-icons/rx";
 
 const AddPatient: React.FC = () => {
   const [patientName, setPatientName] = useState<string>("");
@@ -15,7 +17,9 @@ const AddPatient: React.FC = () => {
 
   const spicesInput = useRef<HTMLInputElement | null>(null);
 
-  const handleAdd = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+  const handleAdd = (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ): void => {
     e.preventDefault();
     const spice = newSpice.trim();
     if (spice && !spices.includes(spice)) {
@@ -25,6 +29,13 @@ const AddPatient: React.FC = () => {
     setNewSpice("");
 
     spicesInput.current?.focus();
+  };
+
+  const removeSpice = (i: string): void => {
+    const index = spices.indexOf(i);
+    if (index > -1) {
+      setSpices(spices.filter((spice) => spice !== i));
+    }
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
@@ -110,14 +121,27 @@ const AddPatient: React.FC = () => {
         </div>
       </label>
 
-      <p className="mt-2">
+      <div className="mt-2 flex flex-wrap items-center h-10">
         <span className="mr-4">current spices:</span>
         {spices.map((i) => (
-          <span className="bg-gray-300 py-1  px-2 rounded mr-1" key={i}>
-            {i},
-          </span>
+          <div
+            className=" flex bg-gray-300 py-1  pl-2  pr-1 rounded mr-1 "
+            key={i}
+          >
+            <span className="mr-2 ">{i}</span>
+
+            <button
+              onClick={(e) => {
+                e.preventDefault();
+                removeSpice(i);
+              }}
+              className="self-start text-sm  cursor-pointer  rounded-full hover:bg-gray-400 transition duration-75"
+            >
+              <RxCross2 />
+            </button>
+          </div>
         ))}
-      </p>
+      </div>
 
       <button className="mt-8 w-40 self-center bg-sky-600 text-white p-2 rounded-lg hover:bg-sky-700 transition duration-200">
         Add Patient
