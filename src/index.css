@@ -29,8 +29,6 @@ button:focus-visible {
 } */
 
 .active {
-  background-color: rgba(185, 213, 231, 0.616);
-
   border-right: 3px solid rgb(14 165 233) !important;
 
   color: black;

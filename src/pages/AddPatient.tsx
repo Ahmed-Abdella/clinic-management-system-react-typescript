@@ -45,7 +45,7 @@ const AddPatient: React.FC = () => {
   };
   return (
     <form
-      className="flex flex-col w-full px-36 pb-6 [&_label]:mt-6 [&>label]:flex [&>label]:flex-col [&_input]:mt-1 [&_input]:p-2 [&_input]:border [&_input]:border-gray-600  [&_input]:rounded [&_input]:outline-sky-600 "
+      className="flex flex-col w-full px-36 pb-6 [&_label]:mt-6 [&>label]:flex [&>label]:flex-col [&_input]:bg-gray-50  [&_input]:mt-1 [&_input]:p-2  [&_input]:border-b  [&_input]:border-sky-600      [&_input]:outline-none "
       onSubmit={handleSubmit}
     >
       <label>
@@ -97,14 +97,14 @@ const AddPatient: React.FC = () => {
         <span>Diagnosis:</span>
 
         <textarea
-          className="border border-gray-400 h-48 mt-1 p-4 rounded-lg shadow-lg outline-sky-600"
+          className="bg-gray-50 h-48 mt-1 p-4 border-b border-sky-600  outline-none"
           value={diagnosis}
           onChange={(e) => setDiagnosis(e.target.value)}
         ></textarea>
       </label>
 
       <label>
-        <span>Medicinal spice</span>
+        <span>Medicine</span>
         <div className="spices">
           <input
             type="text"
@@ -116,13 +116,13 @@ const AddPatient: React.FC = () => {
             className="ml-2 self-center  text-white bg-green-500 hover:bg-green-600 transition duration-75 font-semibold px-2 py-2 rounded-lg "
             onClick={handleAdd}
           >
-            Add spice
+            Add one
           </button>
         </div>
       </label>
 
-      <div className="mt-2 flex flex-wrap items-center h-10">
-        <span className="mr-4">current spices:</span>
+      <div className=" flex flex-wrap items-center h-10">
+        <span className="mr-4">Current Medicines:</span>
         {spices.map((i) => (
           <div
             className=" flex bg-gray-300 py-1  pl-2  pr-1 rounded mr-1 "
