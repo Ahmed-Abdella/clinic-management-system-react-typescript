@@ -2,6 +2,14 @@ import React, { useState, useRef } from "react";
 
 import { RxCross2 } from "react-icons/rx";
 
+import { useFirestore } from "../hooks/useFirestore";
+
+import { Timestamp } from "firebase/firestore";
+
+import { useNavigate } from "react-router-dom";
+
+import { useAuthContext } from "../hooks/useAuthContext";
+
 const AddPatient: React.FC = () => {
   const [patientName, setPatientName] = useState<string>("");
   const [patientAge, setPatientAge] = useState<number | string>("");
@@ -11,6 +19,12 @@ const AddPatient: React.FC = () => {
 
   const [newSpice, setNewSpice] = useState<string>("");
   const [spices, setSpices] = useState<string[]>([]);
+
+  const { addDocument, response } = useFirestore("patients");
+
+  const { user } = useAuthContext();
+
+  const navigate = useNavigate();
 
   // const onGenderChange = (e:React.FormEvent<HTMLFormElement>) => {
 
@@ -39,8 +53,26 @@ const AddPatient: React.FC = () => {
     }
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    const createdAt = Timestamp.fromDate(new Date());
+    const uid = user?.uid;
+
+    await addDocument({
+      uid,
+      patientName,
+      patientAge,
+      diagnosis,
+      notes,
+      gender,
+      spices,
+      createdAt,
+    });
+
+    if (!response.error) {
+      navigate("/");
+    }
 
     console.log(patientName, patientAge, diagnosis, notes, gender, spices);
   };
@@ -157,6 +189,10 @@ const AddPatient: React.FC = () => {
       <button className="mt-8 w-40 self-center bg-sky-600 text-white p-2 rounded-lg hover:bg-sky-700 transition duration-200">
         Add Patient
       </button>
+
+      {response.isPending && (
+        <p className="text-xl my-4 text-sky-500">Adding The Patient</p>
+      )}
     </form>
   );
 };
