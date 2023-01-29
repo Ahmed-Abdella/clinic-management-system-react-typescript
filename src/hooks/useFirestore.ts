@@ -3,6 +3,9 @@ import { useReducer, useEffect, useState } from "react";
 import { db } from "../firebase/firebase";
 import { collection, addDoc, Timestamp } from "firebase/firestore";
 
+import { DocumentReference } from "firebase/firestore";
+import { DocumentData } from "firebase/firestore";
+
 interface patientType {
   uid: string | undefined;
   patientName: string;
@@ -23,7 +26,9 @@ interface StateType {
 
 interface ActionType {
   type: string;
-  payload?: any;
+
+  // payload type problem
+  payload?: DocumentReference<DocumentData> | patientType | string | any;
 }
 
 let initialState: StateType = {

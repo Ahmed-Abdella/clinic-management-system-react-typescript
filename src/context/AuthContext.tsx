@@ -25,7 +25,7 @@ interface actionType {
 interface authContextType {
   authIsReady: boolean;
   user: User | null;
-  dispatch?: any;
+  dispatch?: (action: actionType) => void;
 }
 
 export const AuthContext = createContext<authContextType>({

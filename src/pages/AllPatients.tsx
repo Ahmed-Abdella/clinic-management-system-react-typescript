@@ -2,14 +2,25 @@ import { useState, useEffect } from "react";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../firebase/firebase";
 
+import { useAuthContext } from "../hooks/useAuthContext";
+
+import { Timestamp } from "firebase/firestore";
+
 interface patientType {
-  name: string;
-  age: number;
-  diagnosis: string;
+  uid: string | undefined;
+  patientName: string;
+  patientAge: number | string;
+  diagnosis?: string;
+  notes?: string;
+  gender: string;
+  spices: string[];
+  createdAt: Timestamp;
 }
 
 const AllPatients = () => {
   const [patients, setPatients] = useState<patientType[]>([]);
+  const { user } = useAuthContext();
+  const uid = user?.uid;
 
   useEffect(() => {
     const colRef = collection(db, "patients");
@@ -20,9 +31,14 @@ const AllPatients = () => {
           setPatients(
             snapshot.docs.map((doc) => {
               return {
-                name: doc.data().name,
-                age: doc.data().age,
+                uid: uid,
+                patientName: doc.data().patientName,
+                patientAge: doc.data().patientAge,
                 diagnosis: doc.data().diagnosis,
+                notes: doc.data().notes,
+                gender: doc.data().gender,
+                spices: doc.data().spices,
+                createdAt: doc.data().createdAt,
               };
             })
           );

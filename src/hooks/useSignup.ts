@@ -33,7 +33,9 @@ export const useSignup = () => {
     try {
       const res = await createUserWithEmailAndPassword(auth, email, password);
 
-      dispatch({ type: "LOGIN", payload: res.user });
+      if (dispatch) {
+        dispatch({ type: "LOGIN", payload: res.user });
+      }
 
       setIsPending(false);
       setError(null);

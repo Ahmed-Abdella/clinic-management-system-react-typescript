@@ -20,7 +20,9 @@ export const useLogin = () => {
     try {
       const res = await signInWithEmailAndPassword(auth, email, password);
 
-      dispatch({ type: "LOGIN", payload: res.user });
+      if (dispatch) {
+        dispatch({ type: "LOGIN", payload: res.user });
+      }
 
       setIsPending(false);
       setError(null);
