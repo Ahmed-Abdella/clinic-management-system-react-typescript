@@ -186,13 +186,12 @@ const AddPatient: React.FC = () => {
         ))}
       </div>
 
-      <button className="mt-8 w-40 self-center bg-sky-600 text-white p-2 rounded-lg hover:bg-sky-700 transition duration-200">
-        Add Patient
-      </button>
-
       {response.isPending && (
         <p className="text-xl my-4 text-sky-500">Adding The Patient</p>
       )}
+      <button className="mt-8 w-40 self-center bg-sky-600 text-white p-2 rounded-lg hover:bg-sky-700 transition duration-200">
+        Add Patient
+      </button>
     </form>
   );
 };

@@ -7,7 +7,7 @@ export default function PatientsList({ patients }: { patients: any[] }) {
         <Link
           to={`/patient/${patient.id}`}
           key={patient.id}
-          className=" [&_span]:text-sky-600   flex gap-8 items-center py-4 px-4 border-b-2 border-gray-200  text-lg hover:bg-gray-200 transition duration-200  "
+          className=" [&_span]:text-sky-600   flex gap-8 items-center py-3 px-4 border-b    hover:bg-gray-50 transition duration-200  "
         >
           <div className="mr-auto">
             <span>Name: </span>

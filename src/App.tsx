@@ -17,7 +17,7 @@ import { useAuthContext } from "./hooks/useAuthContext";
 function App() {
   const { user, authIsReady } = useAuthContext();
   return (
-    <div className="font-sans bg-gray-100 min-h-screen ">
+    <div className="font-sans  min-h-screen ">
       {authIsReady && (
         <BrowserRouter>
           {user && <NavBar />}
