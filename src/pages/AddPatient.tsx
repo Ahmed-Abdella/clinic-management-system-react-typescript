@@ -57,10 +57,10 @@ const AddPatient: React.FC = () => {
     e.preventDefault();
 
     const createdAt = Timestamp.fromDate(new Date());
-    const uid = user?.uid;
+    const doctorUid = user?.uid;
 
     await addDocument({
-      uid,
+      doctorUid,
       patientName,
       patientAge,
       diagnosis,

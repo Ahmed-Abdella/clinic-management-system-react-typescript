@@ -7,7 +7,7 @@ import { DocumentReference } from "firebase/firestore";
 import { DocumentData } from "firebase/firestore";
 
 interface patientType {
-  uid: string | undefined;
+  doctorUid: string | undefined;
   patientName: string;
   patientAge: number | string;
   diagnosis?: string;
