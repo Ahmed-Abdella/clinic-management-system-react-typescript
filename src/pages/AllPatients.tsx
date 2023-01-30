@@ -3,6 +3,7 @@ import { useAuthContext } from "../hooks/useAuthContext";
 import { useCollection } from "../hooks/useCollection";
 
 import { Timestamp } from "firebase/firestore";
+import PatientsList from "../components/PatientsList";
 
 interface patientType {
   id?: string;
@@ -27,7 +28,7 @@ const AllPatients = () => {
 
   console.log(patients);
 
-  return <div></div>;
+  return <PatientsList patients={patients} />;
 };
 
 export default AllPatients;

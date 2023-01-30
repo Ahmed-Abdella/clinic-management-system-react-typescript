@@ -9,6 +9,8 @@ import Schedule from "./pages/Schedule";
 import AllPatients from "./pages/AllPatients";
 import Signup from "./pages/Signup";
 import Login from "./pages/Login";
+import Patient from "./pages/Patient";
+
 import Header from "./components/Header";
 import { useAuthContext } from "./hooks/useAuthContext";
 
@@ -20,7 +22,7 @@ function App() {
         <BrowserRouter>
           {user && <NavBar />}
 
-          <div className={`${user ? " ml-48 lg:ml-2" : "ml-2"} `}>
+          <div className={`${user ? "px-16 ml-48 lg:ml-2" : "ml-2"} `}>
             <Header />
             <Routes>
               <Route path="/" element={user ? <Dashboard /> : <Login />} />
@@ -36,6 +38,12 @@ function App() {
                 path="/all-patients"
                 element={user ? <AllPatients /> : <Login />}
               />
+
+              <Route
+                path="/patient/:id"
+                element={user ? <Patient /> : <Login />}
+              />
+
               <Route
                 path="/signup"
                 element={!user ? <Signup /> : <Dashboard />}
