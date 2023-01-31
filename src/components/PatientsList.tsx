@@ -1,8 +1,8 @@
-import { Link } from "react-router-dom";
+import { Link } from "react-router-dom"
 
 export default function PatientsList({ patients }: { patients: any[] }) {
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col font-semibold">
       {patients.map((patient) => (
         <Link
           to={`/patient/${patient.id}`}
@@ -24,5 +24,5 @@ export default function PatientsList({ patients }: { patients: any[] }) {
         </Link>
       ))}
     </div>
-  );
+  )
 }

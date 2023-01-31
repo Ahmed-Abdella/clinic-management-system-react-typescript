@@ -1,6 +1,6 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react"
 
-import { db } from "../firebase/firebase";
+import { db } from "../firebase/firebase"
 
 // firebase imports
 import {
@@ -14,41 +14,63 @@ import {
   Query,
   QuerySnapshot,
   WhereFilterOp,
-} from "firebase/firestore";
+  getDocs,
+  doc,
+} from "firebase/firestore"
 
 export function useCollection<T>(
   coll: string,
   _q?: [string, WhereFilterOp, string | undefined]
 ) {
-  const [documents, setDocuments] = useState<T[]>([]);
-  const [error, SetError] = useState<null | string>(null);
+  const [documents, setDocuments] = useState<T[] | null>(null)
+  const [error, setError] = useState<null | string>(null)
+  const [isPending, setIsPending] = useState<boolean>(false)
 
-  const q = useRef(_q).current;
+  const q = useRef(_q).current
 
   useEffect(() => {
-    let ref: any = collection(db, coll);
+    setIsPending(true)
+    let ref: Query = collection(db, coll)
 
     if (q) {
-      ref = query(ref, where(q[0], q[1], q[2]));
+      ref = query(ref, where(q[0], q[1], q[2]))
     }
 
-    const unsub = onSnapshot(
-      ref,
-      (snapshot: any) => {
-        let results: T[] = [];
-        snapshot.docs.forEach((doc: any) => {
-          results.push({ ...doc.data(), id: doc.id });
-        });
+    getDocs(ref)
+      .then((snapshot) => {
+        console.log(snapshot)
 
-        setDocuments(results);
-      },
-      (error) => {
-        SetError(error.message);
-      }
-    );
+        setIsPending(false)
 
-    return () => unsub();
-  }, [coll, q]);
+        setDocuments(
+          snapshot.docs.map((doc: DocumentData) => ({
+            ...doc.data(),
+            id: doc.id,
+          }))
+        )
+      })
+      .catch((error) => {
+        setError(`can't fetch data: ${error.message}`)
+        setIsPending(false)
+      })
 
-  return { documents, error };
+    // const unsub = onSnapshot(
+    //   ref,
+    //   (snapshot: any) => {
+    //     let results: T[] = [];
+    //     snapshot.docs.forEach((doc: any) => {
+    //       results.push({ ...doc.data(), id: doc.id });
+    //     });
+
+    //     setDocuments(results);
+    //   },
+    //   (error) => {
+    //     setError(error.message);
+    //   }
+    // );
+
+    // return () => unsub();
+  }, [coll, q])
+
+  return { documents, error, isPending }
 }

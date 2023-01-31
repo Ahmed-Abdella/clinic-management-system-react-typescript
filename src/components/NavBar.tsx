@@ -1,19 +1,19 @@
-import { Form, NavLink } from "react-router-dom";
+import { Form, NavLink } from "react-router-dom"
 
-import { RxDashboard } from "react-icons/rx";
+import { RxDashboard } from "react-icons/rx"
 
-import { AiOutlineUserAdd } from "react-icons/ai";
+import { AiOutlineUserAdd } from "react-icons/ai"
 
-import { MdSchedule } from "react-icons/Md";
+import { MdSchedule } from "react-icons/Md"
 
-import { BsPeople } from "react-icons/Bs";
+import { BsPeople } from "react-icons/Bs"
 
-import { useLogout } from "../hooks/useLogout";
+import { useLogout } from "../hooks/useLogout"
 
-import { BiLogOutCircle } from "react-icons/Bi";
+import { BiLogOutCircle } from "react-icons/Bi"
 
 const NavBar: React.FC = () => {
-  const { logout } = useLogout();
+  const { logout } = useLogout()
   return (
     <div className="flex flex-col w-48  fixed top-0 left-0 bottom-0 min-h-screen border-r lg:translate-x-[-20rem] transition duration-500  [&_svg]:text-sky-600 ">
       <div className="w-full flex flex-col items-center px-2 mt-10">
@@ -31,7 +31,7 @@ const NavBar: React.FC = () => {
         </p>
       </div>
 
-      <ul className=" text-gray-600 text-base  flex flex-col gap-2   py-10 [&>*]:[&>*]:flex [&>*]:[&>*]:items-center [&>*]:[&>*]:[&>*]:mr-4 [&>*]:[&>*]:px-4 [&>*]:[&>*]:py-1 [&>*]:[&>*]:border-r-4 [&>*]:[&>*]:border-transparent   [&>*]:[&>*]:rounded-r-sm w-full   ">
+      <ul className=" text-gray-600 text-base font-semibold  flex flex-col gap-2   py-10 [&>*]:[&>*]:flex [&>*]:[&>*]:items-center [&>*]:[&>*]:[&>*]:mr-4 [&>*]:[&>*]:px-4 [&>*]:[&>*]:py-1 [&>*]:[&>*]:border-r-4 [&>*]:[&>*]:border-transparent   [&>*]:[&>*]:rounded-r-sm w-full   ">
         <li>
           <NavLink className="" to={"/"}>
             <RxDashboard />
@@ -68,10 +68,10 @@ const NavBar: React.FC = () => {
         onClick={logout}
       >
         <BiLogOutCircle />
-        <span className="">logout</span>
+        <span className="font-semibold">logout</span>
       </button>
     </div>
-  );
-};
+  )
+}
 
-export default NavBar;
+export default NavBar

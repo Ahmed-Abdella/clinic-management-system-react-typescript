@@ -1,23 +1,23 @@
-import { Routes, Route, BrowserRouter, Navigate } from "react-router-dom";
+import { Routes, Route, BrowserRouter, Navigate } from "react-router-dom"
 
-import NavBar from "./components/NavBar";
+import NavBar from "./components/NavBar"
 
-import "./App.css";
-import AddPatient from "./pages/AddPatient";
-import Dashboard from "./pages/Dashboard";
-import Schedule from "./pages/Schedule";
-import AllPatients from "./pages/AllPatients";
-import Signup from "./pages/Signup";
-import Login from "./pages/Login";
-import Patient from "./pages/Patient";
+import "./App.css"
+import AddPatient from "./pages/AddPatient"
+import Dashboard from "./pages/Dashboard"
+import Schedule from "./pages/Schedule"
+import AllPatients from "./pages/AllPatients"
+import Signup from "./pages/Signup"
+import Login from "./pages/Login"
+import Patient from "./pages/Patient"
 
-import Header from "./components/Header";
-import { useAuthContext } from "./hooks/useAuthContext";
+import Header from "./components/Header"
+import { useAuthContext } from "./hooks/useAuthContext"
 
 function App() {
-  const { user, authIsReady } = useAuthContext();
+  const { user, authIsReady } = useAuthContext()
   return (
-    <div className="font-sans  min-h-screen ">
+    <div className="font-sans font-semibold  min-h-screen ">
       {authIsReady && (
         <BrowserRouter>
           {user && <NavBar />}
@@ -57,7 +57,7 @@ function App() {
         </BrowserRouter>
       )}
     </div>
-  );
+  )
 }
 
-export default App;
+export default App

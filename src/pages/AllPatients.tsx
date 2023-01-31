@@ -1,34 +1,49 @@
-import { useAuthContext } from "../hooks/useAuthContext";
+import { useAuthContext } from "../hooks/useAuthContext"
 
-import { useCollection } from "../hooks/useCollection";
+import { useCollection } from "../hooks/useCollection"
 
-import { Timestamp } from "firebase/firestore";
-import PatientsList from "../components/PatientsList";
+import { Timestamp } from "firebase/firestore"
+import PatientsList from "../components/PatientsList"
 
 interface patientType {
-  id?: string;
-  doctorUid: string | undefined;
-  patientName: string;
-  patientAge: number | string;
-  diagnosis?: string;
-  notes?: string;
-  gender: string;
-  spices: string[];
-  createdAt: Timestamp;
+  id?: string
+  doctorUid: string | undefined
+  patientName: string
+  patientAge: number | string
+  diagnosis?: string
+  notes?: string
+  gender: string
+  spices: string[]
+  createdAt: Timestamp
 }
 
 const AllPatients = () => {
-  const { user } = useAuthContext();
-  const uid = user?.uid;
+  const { user } = useAuthContext()
+  const uid = user?.uid
 
-  const { documents: patients, error } = useCollection<patientType>(
-    "patients",
-    ["doctorUid", "==", uid]
-  );
+  const {
+    documents: patients,
+    error,
+    isPending,
+  } = useCollection<patientType>("patients", ["doctorUid", "==", uid])
 
-  console.log(patients);
+  return (
+    <div className="flex flex-col [&>*]:mt-3">
+      <h2 className="text-2xl font-semibold">All Patients</h2>
 
-  return <PatientsList patients={patients} />;
-};
+      {patients && (
+        <>
+          <p className="text-sm text-gray-500 font-semibold">
+            {`${patients.length}`} patients
+          </p>
+          <PatientsList patients={patients} />
+        </>
+      )}
 
-export default AllPatients;
+      {error && <p className="text-red-600">{error}</p>}
+      {isPending && <p className="text-2xl text-sky-600">Loading....</p>}
+    </div>
+  )
+}
+
+export default AllPatients

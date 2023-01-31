@@ -7,9 +7,9 @@ const Header = () => {
 
   const { logout } = useLogout();
   return (
-    <div className=" flex items-center justify-between left-0 py-6 px-28">
+    <div className=" flex items-center left-0 py-6 ">
       <div className="text-2xl font-bold">LOGO</div>
-      <div className="">
+      <div className="ml-auto">
         <ul className=" flex items-center justify-center   [&>*]:[&>*]:px-2 [&>*]:[&>*]:py-2 [&>*]:[&>*]:rounded-lg    ">
           {!user && (
             <>
@@ -34,7 +34,7 @@ const Header = () => {
           )}
 
           {user && (
-            <li>
+            <li className="">
               <button
                 className="font-semibold text-sky-600 hover:underline  transition duration-100 "
                 onClick={logout}
