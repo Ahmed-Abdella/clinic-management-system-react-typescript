@@ -4,7 +4,7 @@ import { useFirestore } from "../hooks/useFirestore"
 import { MdPerson } from "react-icons/Md"
 
 export default function PatientsList({ patients }: { patients: any[] }) {
-  const { deleteDocument } = useFirestore("patients")
+  const { deleteDocument, response } = useFirestore("patients")
 
   const deletePatient = (
     e: React.MouseEvent<HTMLButtonElement>,
@@ -47,7 +47,7 @@ export default function PatientsList({ patients }: { patients: any[] }) {
               }}
               className=" text-white text-sm bg-red-500  py-1 px-2 rounded hover:bg-red-600 transition duration-75"
             >
-              Delete patient
+              {response.isPending ? "Deleting....." : "delete patient"}
             </button>
           </div>
         </div>
