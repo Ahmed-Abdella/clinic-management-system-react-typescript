@@ -28,7 +28,7 @@ const AllPatients = () => {
   } = useCollection<patientType>("patients", ["doctorUid", "==", uid])
 
   return (
-    <div className="flex flex-col [&>*]:mt-3">
+    <div className="flex flex-col [&>*]:mb-3">
       <h2 className="text-2xl font-semibold">All Patients</h2>
 
       {patients && (

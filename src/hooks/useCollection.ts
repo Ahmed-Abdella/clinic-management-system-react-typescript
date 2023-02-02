@@ -36,40 +36,41 @@ export function useCollection<T>(
       ref = query(ref, where(q[0], q[1], q[2]))
     }
 
-    getDocs(ref)
-      .then((snapshot) => {
-        console.log(snapshot)
+    // getDocs(ref)
+    //   .then((snapshot) => {
+    //     console.log(snapshot)
 
+    //     setIsPending(false)
+
+    //     setDocuments(
+    //       snapshot.docs.map((doc: DocumentData) => ({
+    //         ...doc.data(),
+    //         id: doc.id,
+    //       }))
+    //     )
+    //   })
+    //   .catch((error) => {
+    //     setError(`can't fetch data: ${error.message}`)
+    //     setIsPending(false)
+    //   })
+
+    const unsub = onSnapshot(
+      ref,
+      (snapshot: any) => {
         setIsPending(false)
+        let results: T[] = []
+        snapshot.docs.forEach((doc: any) => {
+          results.push({ ...doc.data(), id: doc.id })
+        })
 
-        setDocuments(
-          snapshot.docs.map((doc: DocumentData) => ({
-            ...doc.data(),
-            id: doc.id,
-          }))
-        )
-      })
-      .catch((error) => {
-        setError(`can't fetch data: ${error.message}`)
-        setIsPending(false)
-      })
+        setDocuments(results)
+      },
+      (error) => {
+        setError(error.message)
+      }
+    )
 
-    // const unsub = onSnapshot(
-    //   ref,
-    //   (snapshot: any) => {
-    //     let results: T[] = [];
-    //     snapshot.docs.forEach((doc: any) => {
-    //       results.push({ ...doc.data(), id: doc.id });
-    //     });
-
-    //     setDocuments(results);
-    //   },
-    //   (error) => {
-    //     setError(error.message);
-    //   }
-    // );
-
-    // return () => unsub();
+    return () => unsub()
   }, [coll, q])
 
   return { documents, error, isPending }

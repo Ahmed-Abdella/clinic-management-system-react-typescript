@@ -28,28 +28,30 @@ export default function Patient() {
   console.log(patient)
 
   return (
-    <div className="flex flex-col gap-8">
+    <>
       {patient && (
-        <>
-          <div>{patient?.patientName}</div>
+        <div className="flex flex-col ">
+          <div className="flex items-center gap-2">
+            <div>{patient?.patientName}</div>
 
-          <div>{patient?.patientAge}</div>
+            <div>{patient?.patientAge}</div>
+
+            <div>{patient?.gender}</div>
+          </div>
+
+          <div>{String(patient?.createdAt.toDate().toDateString())}</div>
 
           <div>{patient?.diagnosis}</div>
 
           <div>{patient?.notes}</div>
 
           <div>{patient?.spices}</div>
-
-          <div>{patient?.gender}</div>
-
-          <div>{String(patient?.createdAt)}</div>
-        </>
+        </div>
       )}
       {isPending && <p className="text-2xl text-sky-600">Loading....</p>}
       {error && (
         <p className="text-red-600 bg-red-100 px-3 py-2 rounded">{error}</p>
       )}
-    </div>
+    </>
   )
 }
