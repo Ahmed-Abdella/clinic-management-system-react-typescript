@@ -16,22 +16,22 @@ export default function PatientsList({ patients }: { patients: any[] }) {
   }
 
   return (
-    <div className="flex flex-col font-semibold">
+    <div className="flex flex-col ">
       {patients.map((patient) => (
         <div
           key={patient.id}
-          className="border-b flex items-center py-2 px-4  bg-sky-50"
+          className="border-b flex items-center  px-4  bg-sky-50 hover:bg-sky-100 transition duration-100"
         >
           <Link
             to={`/patient/${patient.id}`}
-            className="mr-2 flex-grow [&_span]:text-sky-600   flex gap-8 items-center transition duration-200  "
+            className="py-2 mr-2 flex-grow [&_span]:text-gray-500   grid grid-cols-5 gap-2 items-center justify-between transition duration-200  "
           >
-            <div className="   transition duration-75 flex items-center ">
+            <div className="col-span-3   transition duration-75 flex items-center ">
               <MdPerson className="inline-block mr-2" />
-              <span>{patient.patientName}</span>
+              <p className="text-sky-700">{patient.patientName}</p>
             </div>
 
-            <div>
+            <div className=" ">
               <span>Age: </span>
               {patient.patientAge}
             </div>
