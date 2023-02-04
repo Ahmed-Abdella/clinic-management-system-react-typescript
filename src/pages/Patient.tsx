@@ -6,7 +6,7 @@ import { useDocument } from "../hooks/useDocument"
 
 import { Timestamp } from "firebase/firestore"
 
-interface patientType {
+interface PatientType {
   id?: string
   doctorUid: string | undefined
   patientName: string
@@ -24,7 +24,7 @@ export default function Patient() {
     document: patient,
     error,
     isPending,
-  } = useDocument<patientType>("patients", id!)
+  } = useDocument<PatientType>("patients", id!)
   console.log(patient)
 
   return (

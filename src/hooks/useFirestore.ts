@@ -12,7 +12,7 @@ import {
 import { DocumentReference } from "firebase/firestore"
 import { DocumentData } from "firebase/firestore"
 
-interface patientType {
+interface PatientType {
   doctorUid: string | undefined
   patientName: string
   patientAge: number | string
@@ -24,7 +24,7 @@ interface patientType {
 }
 
 interface StateType {
-  document: null | patientType
+  document: null | PatientType
   isPending: boolean
   error: null | string
   success: null | boolean
@@ -34,7 +34,7 @@ interface ActionType {
   type: string
 
   // payload type problem
-  payload?: DocumentReference<DocumentData> | patientType | string | any
+  payload?: DocumentReference<DocumentData> | PatientType | string | any
 }
 
 let initialState: StateType = {
@@ -91,7 +91,7 @@ export const useFirestore = (coll: string) => {
   }
 
   // add a document
-  const addDocument = async (doc: patientType) => {
+  const addDocument = async (doc: PatientType) => {
     dispatch({ type: "IS_PENDING" })
 
     try {
@@ -121,7 +121,7 @@ export const useFirestore = (coll: string) => {
   }
 
   //update document
-  // const updateDocument = async (id:string, updates:patientType) => {
+  // const updateDocument = async (id:string, updates:PatientType) => {
   //   dispatch({type:"IS_PENDING"})
   //         try {
   //           const updatedDocument = await ref.doc(id).update(updates)
