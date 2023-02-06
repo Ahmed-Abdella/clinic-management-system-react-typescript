@@ -7,24 +7,15 @@ import {
   Timestamp,
   deleteDoc,
   doc,
+  WithFieldValue,
+  DocumentSnapshot,
 } from "firebase/firestore"
 
 import { DocumentReference } from "firebase/firestore"
 import { DocumentData } from "firebase/firestore"
 
-interface PatientType {
-  doctorUid: string | undefined
-  patientName: string
-  patientAge: number | string
-  diagnosis?: string
-  notes?: string
-  gender: string
-  spices: string[]
-  createdAt: Timestamp
-}
-
-interface StateType {
-  document: null | PatientType
+interface StateType<T> {
+  document: null | T
   isPending: boolean
   error: null | string
   success: null | boolean
@@ -34,17 +25,17 @@ interface ActionType {
   type: string
 
   // payload type problem
-  payload?: DocumentReference<DocumentData> | PatientType | string | any
+  payload?: any
 }
 
-let initialState: StateType = {
+let initialState: StateType<null> = {
   document: null,
   isPending: false,
   error: null,
   success: null,
 }
 
-const firestoreReducer = (state: StateType, action: ActionType) => {
+const firestoreReducer = <T>(state: StateType<T>, action: ActionType) => {
   switch (action.type) {
     case "IS_PENDING":
       return { isPending: true, document: null, success: false, error: null }
@@ -76,8 +67,8 @@ const firestoreReducer = (state: StateType, action: ActionType) => {
   }
 }
 
-export const useFirestore = (coll: string) => {
-  const [response, dispatch] = useReducer(firestoreReducer, initialState)
+export const useFirestore = <T>(coll: string) => {
+  const [response, dispatch] = useReducer(firestoreReducer<T>, initialState)
   const [isCancelled, setIsCancelled] = useState(false)
 
   // coll ref
@@ -91,7 +82,7 @@ export const useFirestore = (coll: string) => {
   }
 
   // add a document
-  const addDocument = async (doc: PatientType) => {
+  const addDocument = async (doc: WithFieldValue<DocumentData>) => {
     dispatchIfNotCancelled({ type: "IS_PENDING" })
 
     try {

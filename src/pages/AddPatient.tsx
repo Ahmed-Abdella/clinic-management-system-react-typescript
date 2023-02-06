@@ -1,63 +1,74 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef } from "react"
 
-import { RxCross2 } from "react-icons/rx";
+import { RxCross2 } from "react-icons/rx"
 
-import { useFirestore } from "../hooks/useFirestore";
+import { useFirestore } from "../hooks/useFirestore"
 
-import { Timestamp } from "firebase/firestore";
+import { Timestamp } from "firebase/firestore"
 
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom"
 
-import { useAuthContext } from "../hooks/useAuthContext";
+import { useAuthContext } from "../hooks/useAuthContext"
 
 const AddPatient: React.FC = () => {
-  const [patientName, setPatientName] = useState<string>("");
-  const [patientAge, setPatientAge] = useState<number | string>("");
-  const [gender, setGender] = useState<string>("");
-  const [diagnosis, setDiagnosis] = useState<string>("");
-  const [notes, setNotes] = useState<string>("");
+  const [patientName, setPatientName] = useState<string>("")
+  const [patientAge, setPatientAge] = useState<number | string>("")
+  const [gender, setGender] = useState<string>("")
+  const [diagnosis, setDiagnosis] = useState<string>("")
+  const [notes, setNotes] = useState<string>("")
 
-  const [newSpice, setNewSpice] = useState<string>("");
-  const [spices, setSpices] = useState<string[]>([]);
+  const [newSpice, setNewSpice] = useState<string>("")
+  const [spices, setSpices] = useState<string[]>([])
 
-  const { addDocument, response } = useFirestore("patients");
+  interface PatientType {
+    doctorUid: string | undefined
+    patientName: string
+    patientAge: number | string
+    diagnosis?: string
+    notes?: string
+    gender: string
+    spices: string[]
+    createdAt: Timestamp
+  }
 
-  const { user } = useAuthContext();
+  const { addDocument, response } = useFirestore<PatientType>("patients")
 
-  const navigate = useNavigate();
+  const { user } = useAuthContext()
+
+  const navigate = useNavigate()
 
   // const onGenderChange = (e:React.FormEvent<HTMLFormElement>) => {
 
   // }
 
-  const spicesInput = useRef<HTMLInputElement | null>(null);
+  const spicesInput = useRef<HTMLInputElement | null>(null)
 
   const handleAdd = (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ): void => {
-    e.preventDefault();
-    const spice = newSpice.trim();
+    e.preventDefault()
+    const spice = newSpice.trim()
     if (spice && !spices.includes(spice)) {
-      setSpices((prevspices) => [...prevspices, spice]);
+      setSpices((prevspices) => [...prevspices, spice])
     }
 
-    setNewSpice("");
+    setNewSpice("")
 
-    spicesInput.current?.focus();
-  };
+    spicesInput.current?.focus()
+  }
 
   const removeSpice = (i: string): void => {
-    const index = spices.indexOf(i);
+    const index = spices.indexOf(i)
     if (index > -1) {
-      setSpices(spices.filter((spice) => spice !== i));
+      setSpices(spices.filter((spice) => spice !== i))
     }
-  };
+  }
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+    e.preventDefault()
 
-    const createdAt = Timestamp.fromDate(new Date());
-    const doctorUid = user?.uid;
+    const createdAt = Timestamp.fromDate(new Date())
+    const doctorUid = user?.uid
 
     await addDocument({
       doctorUid,
@@ -68,14 +79,14 @@ const AddPatient: React.FC = () => {
       gender,
       spices,
       createdAt,
-    });
+    })
 
     if (!response.error) {
-      navigate("/");
+      navigate("/")
     }
 
-    console.log(patientName, patientAge, diagnosis, notes, gender, spices);
-  };
+    console.log(patientName, patientAge, diagnosis, notes, gender, spices)
+  }
   return (
     <form
       className="flex flex-col w-full px-36 pb-6 [&_label]:mt-6 [&>label]:flex [&>label]:flex-col [&_input]:bg-gray-50  [&_input]:mt-1 [&_input]:p-2  [&_input]:border-b  [&_input]:border-sky-600      [&_input]:outline-none "
@@ -175,8 +186,8 @@ const AddPatient: React.FC = () => {
 
             <button
               onClick={(e) => {
-                e.preventDefault();
-                removeSpice(i);
+                e.preventDefault()
+                removeSpice(i)
               }}
               className="self-start text-sm  cursor-pointer  rounded-full hover:bg-gray-400 transition duration-75"
             >
@@ -193,7 +204,7 @@ const AddPatient: React.FC = () => {
         Add Patient
       </button>
     </form>
-  );
-};
+  )
+}
 
-export default AddPatient;
+export default AddPatient
