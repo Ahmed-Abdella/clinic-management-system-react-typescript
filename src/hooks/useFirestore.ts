@@ -92,7 +92,7 @@ export const useFirestore = (coll: string) => {
 
   // add a document
   const addDocument = async (doc: PatientType) => {
-    dispatch({ type: "IS_PENDING" })
+    dispatchIfNotCancelled({ type: "IS_PENDING" })
 
     try {
       const addedDocument = await addDoc(ref, { ...doc })
@@ -109,7 +109,7 @@ export const useFirestore = (coll: string) => {
 
   // delete a document
   const deleteDocument = async (id: string) => {
-    dispatch({ type: "IS_PENDING" })
+    dispatchIfNotCancelled({ type: "IS_PENDING" })
 
     try {
       const docRef: DocumentReference = doc(db, coll, id)
@@ -136,7 +136,9 @@ export const useFirestore = (coll: string) => {
   // }
 
   useEffect(() => {
-    return () => setIsCancelled(true)
+    return () => {
+      setIsCancelled(true)
+    }
   }, [])
 
   return { addDocument, deleteDocument, response }
