@@ -17,10 +17,7 @@ export default function PatientItem({ patient }: any) {
   }
 
   return (
-    <div
-      key={patient.id}
-      className="border-b flex items-center  px-4  bg-sky-50 hover:bg-sky-100 transition duration-100"
-    >
+    <>
       <Link
         to={`/patient/${patient.id}`}
         className="py-2 mr-2 flex-grow [&_span]:text-gray-500   grid grid-cols-5 gap-2 items-center justify-between transition duration-200  "
@@ -49,6 +46,6 @@ export default function PatientItem({ patient }: any) {
           {response.isPending ? "Deleting....." : "delete patient"}
         </button>
       </div>
-    </div>
+    </>
   )
 }

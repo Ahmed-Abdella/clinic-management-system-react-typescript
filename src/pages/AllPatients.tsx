@@ -5,16 +5,20 @@ import { useCollection } from "../hooks/useCollection"
 import { Timestamp } from "firebase/firestore"
 import PatientsList from "../components/PatientsList"
 
-interface PatientType {
-  id?: string
+interface PatientHistory {
+  diagnosis?: string
+  notes?: string
+  spices?: string[]
+  createdAt: Timestamp
+}
+
+interface PatientData {
+  createdAt: Timestamp
   doctorUid: string | undefined
   patientName: string
   patientAge: number | string
-  diagnosis?: string
-  notes?: string
   gender: string
-  spices: string[]
-  createdAt: Timestamp
+  patientHistory: PatientHistory[]
 }
 
 const AllPatients = () => {
@@ -25,7 +29,7 @@ const AllPatients = () => {
     documents: patients,
     error,
     isPending,
-  } = useCollection<PatientType>("patients", ["doctorUid", "==", uid])
+  } = useCollection<PatientData>("patients", ["doctorUid", "==", uid])
 
   return (
     <div className="">

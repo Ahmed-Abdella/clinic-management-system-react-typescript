@@ -1,30 +1,31 @@
-import React from "react"
-
 import { useParams } from "react-router-dom"
 
 import { useDocument } from "../hooks/useDocument"
 
 import { Timestamp } from "firebase/firestore"
 
-interface PatientType {
-  id?: string
-  doctorUid: string | undefined
-  patientName: string
-  patientAge: number | string
+interface PatientHistory {
   diagnosis?: string
   notes?: string
-  gender: string
-  spices: string[]
+  spices?: string[]
   createdAt: Timestamp
 }
 
+interface PatientData {
+  createdAt: Timestamp
+  doctorUid: string | undefined
+  patientName: string
+  patientAge: number | string
+  gender: string
+  patientHistory: PatientHistory[]
+}
 export default function Patient() {
   const { id } = useParams()
   const {
     document: patient,
     error,
     isPending,
-  } = useDocument<PatientType>("patients", id!)
+  } = useDocument<PatientData>("patients", id!)
   console.log(patient)
 
   return (
@@ -41,11 +42,26 @@ export default function Patient() {
 
           <div>{String(patient?.createdAt.toDate().toDateString())}</div>
 
-          <div>{patient?.diagnosis}</div>
+          <div>
+            {patient.patientHistory.map((history, i) => {
+              return (
+                <div key={i}>
+                  <div>{String(history.createdAt.toDate().toDateString())}</div>
+                  <div>{history.diagnosis}</div>
+                  <div>
+                    {history.spices?.map((spice) => {
+                      return <div key={spice}>{spice}</div>
+                    })}
+                  </div>
+                </div>
+              )
+            })}
+          </div>
+          {/* <div>{patient?.patientHistory.diagnosis}</div>
 
-          <div>{patient?.notes}</div>
+          <div>{patient?.patientHistory.notes}</div>
 
-          <div>{patient?.spices}</div>
+          <div>{patient?.patientHistory.spices}</div> */}
         </div>
       )}
       {isPending && <p className="text-2xl text-sky-600">Loading....</p>}

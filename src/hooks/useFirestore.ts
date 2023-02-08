@@ -112,7 +112,7 @@ export const useFirestore = <T>(coll: string) => {
   }
 
   //update document
-  // const updateDocument = async (id:string, updates:PatientType) => {
+  // const updateDocument = async (id:string, updates:Patient) => {
   //   dispatch({type:"IS_PENDING"})
   //         try {
   //           const updatedDocument = await ref.doc(id).update(updates)

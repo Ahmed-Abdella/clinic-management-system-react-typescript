@@ -20,18 +20,30 @@ const AddPatient: React.FC = () => {
   const [newSpice, setNewSpice] = useState<string>("")
   const [spices, setSpices] = useState<string[]>([])
 
-  interface PatientType {
-    doctorUid: string | undefined
-    patientName: string
-    patientAge: number | string
+  interface PatientHistory {
     diagnosis?: string
     notes?: string
-    gender: string
-    spices: string[]
+    spices?: string[]
     createdAt: Timestamp
   }
 
-  const { addDocument, response } = useFirestore<PatientType>("patients")
+  interface PatientData {
+    createdAt: Timestamp
+    doctorUid: string | undefined
+    patientName: string
+    patientAge: number | string
+    gender: string
+    patientHistory: PatientHistory[]
+  }
+
+  const patientHistory = {
+    createdAt: Timestamp.fromDate(new Date()),
+    diagnosis,
+    notes,
+    spices,
+  }
+
+  const { addDocument, response } = useFirestore<PatientData>("patients")
 
   const { user } = useAuthContext()
 
@@ -71,14 +83,12 @@ const AddPatient: React.FC = () => {
     const doctorUid = user?.uid
 
     await addDocument({
+      createdAt,
       doctorUid,
       patientName,
       patientAge,
-      diagnosis,
-      notes,
       gender,
-      spices,
-      createdAt,
+      patientHistory: [patientHistory],
     })
 
     if (!response.error) {
