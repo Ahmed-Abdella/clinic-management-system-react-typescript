@@ -2,6 +2,8 @@ import { useParams } from "react-router-dom"
 
 import { useDocument } from "../hooks/useDocument"
 
+import { useFirestore } from "../hooks/useFirestore"
+
 import PatientHistoryForm from "../components/PatientHistoryForm"
 
 import { RxCross2 } from "react-icons/rx"
@@ -36,12 +38,7 @@ export default function Patient() {
 
   const [spices, setSpices] = useState<string[]>([])
 
-  const patientHistory: PatientHistory = {
-    createdAt: Timestamp.fromDate(new Date()),
-    diagnosis,
-    notes,
-    spices,
-  }
+  const { updateDocument, response } = useFirestore<PatientData>("patients")
 
   const handleAdd = (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
@@ -70,11 +67,22 @@ export default function Patient() {
     error,
     isPending,
   } = useDocument<PatientData>("patients", id!)
-  console.log(patient)
+
+  const patientHistory: PatientHistory = {
+    createdAt: Timestamp.fromDate(new Date()),
+    diagnosis,
+    notes,
+    spices,
+  }
+
+  const updatedDoc = {
+    patientHistory: patient?.patientHistory.concat([patientHistory]),
+  }
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    console.log(patientHistory)
+    updateDocument(id!, updatedDoc)
+    console.log(response)
   }
 
   return (

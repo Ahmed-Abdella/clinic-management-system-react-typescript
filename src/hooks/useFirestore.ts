@@ -9,6 +9,7 @@ import {
   doc,
   WithFieldValue,
   DocumentSnapshot,
+  updateDoc,
 } from "firebase/firestore"
 
 import { DocumentReference } from "firebase/firestore"
@@ -111,20 +112,23 @@ export const useFirestore = <T>(coll: string) => {
     }
   }
 
-  //update document
-  // const updateDocument = async (id:string, updates:Patient) => {
-  //   dispatch({type:"IS_PENDING"})
-  //         try {
-  //           const updatedDocument = await ref.doc(id).update(updates)
-  //           dispatchIfNotCancelled({ type: "UPDATED_DOCUMENT", payload: updatedDocument });
-  //           return updatedDocument
-  //         }
-  //         catch(err) {
-  //           dispatchIfNotCancelled({ type: "ERROR", payload: err.message });
-  //           return null
-  //         }
-
-  // }
+  const updateDocument = async (id: string, updates: any) => {
+    dispatch({ type: "IS_PENDING" })
+    try {
+      const docRef: DocumentReference = doc(db, coll, id)
+      const updatedDocument = await updateDoc(docRef, updates)
+      dispatchIfNotCancelled({
+        type: "UPDATED_DOCUMENT",
+        payload: updatedDocument,
+      })
+      return updatedDocument
+    } catch (err) {
+      if (err instanceof Error) {
+        dispatchIfNotCancelled({ type: "ERROR", payload: err.message })
+        return null
+      }
+    }
+  }
 
   useEffect(() => {
     return () => {
@@ -132,5 +136,5 @@ export const useFirestore = <T>(coll: string) => {
     }
   }, [])
 
-  return { addDocument, deleteDocument, response }
+  return { addDocument, deleteDocument, updateDocument, response }
 }
