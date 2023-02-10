@@ -35,29 +35,31 @@ export function useDocument<T>(coll: string, id: string) {
     const docRef: DocumentReference = doc(db, coll, id)
 
     // get Document (NO real time)
-    getDoc(docRef)
-      .then((doc: DocumentData) => {
-        setIsPending(false)
-        setDocument(doc.data())
-      })
-      .catch((error) => {
-        setIsPending(false)
-        setError(error.message)
-      })
+    // getDoc(docRef)
+    //   .then((doc: DocumentData) => {
+    //     setIsPending(false)
+    //     setDocument(doc.data())
+    //   })
+    //   .catch((error) => {
+    //     setIsPending(false)
+    //     setError(error.message)
+    //   })
 
     // get document (REAL TIME)
 
-    //     const unsub = onSnapshot(
-    //       docRef,
-    //       (doc: DocumentData) => {
-    //         setDocument(doc.data())
-    //       },
-    //       (error) => {
-    //         setError("Cant get data")
-    //       }
-    //     )
+    const unsub = onSnapshot(
+      docRef,
+      (doc: DocumentData) => {
+        setDocument(doc.data())
+        setIsPending(false)
+      },
+      (error) => {
+        setError("Cant get data")
+        setIsPending(false)
+      }
+    )
 
-    //     return () => unsub()
+    return () => unsub()
   }, [coll, id])
 
   return { document, error, isPending }
