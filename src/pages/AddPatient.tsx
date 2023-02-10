@@ -1,4 +1,9 @@
-import React, { useState, useRef } from "react"
+import React, { useState, useRef, useEffect } from "react"
+
+import { WithFieldValue, DocumentData } from "firebase/firestore"
+
+import { addDoc, collection } from "firebase/firestore"
+import { db } from "../firebase/firebase"
 
 import { RxCross2 } from "react-icons/rx"
 
@@ -9,6 +14,23 @@ import { Timestamp } from "firebase/firestore"
 import { useNavigate } from "react-router-dom"
 
 import { useAuthContext } from "../hooks/useAuthContext"
+import Login from "./Login"
+
+interface PatientHistory {
+  diagnosis?: string
+  notes?: string
+  spices?: string[]
+  createdAt: Timestamp
+}
+
+interface PatientData {
+  createdAt: Timestamp
+  doctorUid: string | undefined
+  patientName: string
+  patientAge: number | string
+  gender: string
+  patientHistory: PatientHistory[]
+}
 
 const AddPatient: React.FC = () => {
   const [patientName, setPatientName] = useState<string>("")
@@ -20,21 +42,12 @@ const AddPatient: React.FC = () => {
   const [newSpice, setNewSpice] = useState<string>("")
   const [spices, setSpices] = useState<string[]>([])
 
-  interface PatientHistory {
-    diagnosis?: string
-    notes?: string
-    spices?: string[]
-    createdAt: Timestamp
-  }
+  const [document, setDocument] = useState<any>(null)
+  const [isPending, setIsPending] = useState<any>(false)
+  const [success, setSuccess] = useState<any>(false)
+  const [error, setError] = useState<any>("")
 
-  interface PatientData {
-    createdAt: Timestamp
-    doctorUid: string | undefined
-    patientName: string
-    patientAge: number | string
-    gender: string
-    patientHistory: PatientHistory[]
-  }
+  // const { addDocument, response } = useFirestore<PatientData>("patients")
 
   const patientHistory = {
     createdAt: Timestamp.fromDate(new Date()),
@@ -42,8 +55,6 @@ const AddPatient: React.FC = () => {
     notes,
     spices,
   }
-
-  const { addDocument, response } = useFirestore<PatientData>("patients")
 
   const { user } = useAuthContext()
 
@@ -78,30 +89,66 @@ const AddPatient: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+    setIsPending(true)
 
     const createdAt = Timestamp.fromDate(new Date())
     const doctorUid = user?.uid
 
-    await addDocument({
-      createdAt,
-      doctorUid,
-      patientName,
-      patientAge,
-      gender,
-      patientHistory: [patientHistory],
-    })
+    const ref = collection(db, "patients")
 
-    if (!response.error) {
-      navigate("/")
+    const addDocument = async () => {
+      try {
+        const addedDocument = await addDoc(ref, {
+          createdAt,
+          doctorUid,
+          patientName,
+          patientAge,
+          gender,
+          patientHistory: [patientHistory],
+        })
+        setIsPending(false)
+        setSuccess(true)
+        setDocument(addedDocument)
+      } catch (err) {
+        if (err instanceof Error) {
+          setIsPending(false)
+          setSuccess(false)
+          setError(err.message)
+        }
+      }
     }
 
-    console.log(patientName, patientAge, diagnosis, notes, gender, spices)
+    addDocument()
+
+    console.log(document, error, isPending)
+
+    // await addDocument({
+    //   createdAt,
+    //   doctorUid,
+    //   patientName,
+    //   patientAge,
+    //   gender,
+    //   patientHistory: [patientHistory],
+    // })
   }
+
+  useEffect(() => {
+    console.log(document)
+    if (success) {
+      navigate(`/patient/${document.id}`)
+    }
+  }, [document])
+
   return (
     <form
       className="flex flex-col w-full px-36 pb-6 [&_label]:mt-6 [&>label]:flex [&>label]:flex-col [&_input]:bg-gray-50  [&_input]:mt-1 [&_input]:p-2  [&_input]:border-b  [&_input]:border-sky-600      [&_input]:outline-none "
       onSubmit={handleSubmit}
     >
+      {document && (
+        <p className="fixed top-6 right-10 bg-green-400 p-4">
+          patient added succesfully
+        </p>
+      )}
       <label>
         <span>Patient name:</span>
 
@@ -207,7 +254,7 @@ const AddPatient: React.FC = () => {
         ))}
       </div>
 
-      {response.isPending && (
+      {isPending && (
         <p className="text-xl my-4 text-sky-500">Adding The Patient</p>
       )}
       <button className="mt-8 w-40 self-center bg-sky-600 text-white p-2 rounded-lg hover:bg-sky-700 transition duration-200">
