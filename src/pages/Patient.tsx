@@ -96,7 +96,7 @@ export default function Patient() {
   return (
     <>
       {patient && (
-        <div className="flex flex-col ">
+        <div className="flex flex-col py-4 ">
           <div className="flex items-center gap-2 [&_span]:mr-1 [&_span]:text-gray-400">
             <div className="font-semibold text-lg ">{patient?.patientName}</div>
 
@@ -115,20 +115,62 @@ export default function Patient() {
             </div>
           </div>
 
-          <div className="mt-10">
-            {patient.patientHistory.map((history, i) => {
-              return (
-                <div key={i}>
-                  <div>{String(history.createdAt.toDate().toDateString())}</div>
-                  <div>{history.diagnosis}</div>
-                  <div>
-                    {history.spices?.map((spice) => {
-                      return <div key={spice}>{spice}</div>
-                    })}
+          <h2 className="font-semibold text-2xl self-center mt-12">
+            Pateint History
+          </h2>
+
+          <div className="">
+            {patient.patientHistory
+              .sort((a, b) => b.createdAt.toMillis() - a.createdAt.toMillis())
+              .map((history, i) => {
+                return (
+                  <div key={i} className="mt-10">
+                    <div className="mt-4 mb-2">
+                      <span className="text-gray-400 mr-4">
+                        Patient History in:
+                      </span>
+                      <span className="text-lg font-semibold">
+                        {String(history.createdAt.toDate().toDateString())}
+                      </span>
+                    </div>
+                    <div className="mt-4 bg-white p-4 shadow rounded-xl">
+                      <div className="mt-2">
+                        <h4 className="mb-1 text-sky-600 text-lg font-semibold">
+                          Diagnosis
+                        </h4>
+
+                        <p>{history.diagnosis}</p>
+                      </div>
+                      <div className="mt-6">
+                        <h4 className="mb-1 text-sky-600 text-lg font-semibold">
+                          Notes
+                        </h4>
+
+                        <p>{history.notes}</p>
+                      </div>
+
+                      <div className="mt-6">
+                        <h4 className="mb-1 text-sky-600 text-lg font-semibold">
+                          Medicines:
+                        </h4>
+
+                        <ul>
+                          {history.spices?.map((spice) => {
+                            return (
+                              <li key={spice}>
+                                <span className="ml-1 text-sky-600 text-lg font-semibold">
+                                  -
+                                </span>{" "}
+                                {spice}
+                              </li>
+                            )
+                          })}
+                        </ul>
+                      </div>
+                    </div>
                   </div>
-                </div>
-              )
-            })}
+                )
+              })}
           </div>
 
           <button
