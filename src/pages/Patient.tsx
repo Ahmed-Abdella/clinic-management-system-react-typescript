@@ -82,6 +82,14 @@ export default function Patient() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     updateDocument(id!, updatedDoc)
+
+    if (!error) {
+      setIsHistoryFormOpen(false)
+      setDiagnosis("")
+      setNotes("")
+      setSpices([])
+    }
+
     console.log(response)
   }
 
@@ -89,17 +97,25 @@ export default function Patient() {
     <>
       {patient && (
         <div className="flex flex-col ">
-          <div className="flex items-center gap-2">
-            <div>{patient?.patientName}</div>
+          <div className="flex items-center gap-2 [&_span]:mr-1 [&_span]:text-gray-400">
+            <div className="font-semibold text-lg ">{patient?.patientName}</div>
 
-            <div>{patient?.patientAge}</div>
+            <div className="ml-auto">
+              <span>Age:</span>
+              {patient?.patientAge}
+            </div>
 
-            <div>{patient?.gender}</div>
+            <div className="ml-2">
+              {" "}
+              <span>Gender:</span>
+              {patient?.gender}
+            </div>
+            <div className="ml-4 text-gray-400 text-sm">
+              {String(patient?.createdAt.toDate().toDateString())}
+            </div>
           </div>
 
-          <div>{String(patient?.createdAt.toDate().toDateString())}</div>
-
-          <div>
+          <div className="mt-10">
             {patient.patientHistory.map((history, i) => {
               return (
                 <div key={i}>
@@ -115,8 +131,11 @@ export default function Patient() {
             })}
           </div>
 
-          <button onClick={() => setIsHistoryFormOpen(true)}>
-            Update Patient
+          <button
+            onClick={() => setIsHistoryFormOpen(true)}
+            className="mt-8 w-40 self-center bg-sky-600 text-white p-2 rounded-lg hover:bg-sky-700 transition duration-200"
+          >
+            Add Patient History
           </button>
 
           {isHistoryFormOpen && (
@@ -176,7 +195,7 @@ export default function Patient() {
                   </div>
                 </label>
 
-                <div className=" flex flex-wrap items-center h-10">
+                <div className="mt-2 flex flex-wrap items-center h-10">
                   <span className="mr-4">Current Medicines:</span>
                   {spices.map((i) => (
                     <div
@@ -198,7 +217,7 @@ export default function Patient() {
                   ))}
                 </div>
                 <button className="mt-8 w-40 self-center bg-sky-600 text-white p-2 rounded-lg hover:bg-sky-700 transition duration-200">
-                  Update patient
+                  Add Patient History
                 </button>
               </form>
             </>
