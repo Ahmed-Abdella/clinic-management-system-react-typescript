@@ -1,15 +1,15 @@
-import { useParams } from "react-router-dom"
+import { useParams, useNavigate } from "react-router-dom"
 
 import { useDocument } from "../hooks/useDocument"
 
 import { useFirestore } from "../hooks/useFirestore"
 
-import PatientHistoryForm from "../components/PatientHistoryForm"
+// import PatientHistoryForm from "../components/PatientHistoryForm"
 
 import { RxCross2 } from "react-icons/rx"
 import { useRef, useState } from "react"
 import { Timestamp } from "firebase/firestore"
-import Login from "./Login"
+import { MdPerson } from "react-icons/Md"
 
 interface PatientHistory {
   diagnosis?: string
@@ -38,7 +38,10 @@ export default function Patient() {
 
   const [spices, setSpices] = useState<string[]>([])
 
-  const { updateDocument, response } = useFirestore<PatientData>("patients")
+  const { updateDocument, deleteDocument, response } =
+    useFirestore<PatientData>("patients")
+
+  const navigate = useNavigate()
 
   const handleAdd = (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
@@ -88,17 +91,35 @@ export default function Patient() {
       setDiagnosis("")
       setNotes("")
       setSpices([])
+      window.scrollTo({ top: 0, left: 0, behavior: "smooth" })
     }
 
     console.log(response)
+  }
+
+  const deletePatient = (
+    e: React.MouseEvent<HTMLButtonElement>,
+    id: string
+  ) => {
+    e.preventDefault()
+
+    deleteDocument(id)
+
+    if (!response.error) {
+      navigate("/")
+    }
   }
 
   return (
     <>
       {patient && (
         <div className="flex flex-col py-4 ">
-          <div className="flex items-center gap-2 [&_span]:mr-1 [&_span]:text-gray-400">
-            <div className="font-semibold text-lg ">{patient?.patientName}</div>
+          <div className="flex items-center gap-2 [&_span]:mr-1 [&_span]:text-sky-500">
+            <div className="font-semibold text-lg flex items-center ">
+              <MdPerson className="mr-2 text-sky-500" />
+
+              <p className="">{patient?.patientName}</p>
+            </div>
 
             <div className="ml-auto">
               <span>Age:</span>
@@ -127,7 +148,7 @@ export default function Patient() {
                   <div key={i} className="mt-10">
                     <div className="mt-4 mb-2">
                       <span className="text-gray-400 mr-4">
-                        Patient History in:
+                        Patient History on:
                       </span>
                       <span className="text-lg font-semibold">
                         {String(history.createdAt.toDate().toDateString())}
@@ -135,14 +156,14 @@ export default function Patient() {
                     </div>
                     <div className="mt-4 bg-white p-4 shadow rounded-xl">
                       <div className="mt-2">
-                        <h4 className="mb-1 text-sky-600 text-lg font-semibold">
+                        <h4 className=" text-sky-600 text-lg font-semibold">
                           Diagnosis
                         </h4>
 
                         <p>{history.diagnosis}</p>
                       </div>
                       <div className="mt-6">
-                        <h4 className="mb-1 text-sky-600 text-lg font-semibold">
+                        <h4 className=" text-sky-600 text-lg font-semibold">
                           Notes
                         </h4>
 
@@ -150,7 +171,7 @@ export default function Patient() {
                       </div>
 
                       <div className="mt-6">
-                        <h4 className="mb-1 text-sky-600 text-lg font-semibold">
+                        <h4 className=" text-sky-600 text-lg font-semibold">
                           Medicines:
                         </h4>
 
@@ -173,12 +194,21 @@ export default function Patient() {
               })}
           </div>
 
-          <button
-            onClick={() => setIsHistoryFormOpen(true)}
-            className="mt-8 w-40 self-center bg-sky-600 text-white p-2 rounded-lg hover:bg-sky-700 transition duration-200"
-          >
-            Add Patient History
-          </button>
+          <div className="self-center [&_button]:mr-2">
+            <button
+              onClick={() => setIsHistoryFormOpen(true)}
+              className="mt-8 w-40 self-center bg-sky-600 text-white p-1 rounded-lg hover:bg-sky-700 transition duration-200"
+            >
+              Add Patient History
+            </button>
+
+            <button
+              onClick={(e) => deletePatient(e, id!)}
+              className="mt-8 w-40 self-center bg-red-500 text-white p-1 rounded-lg hover:bg-red-600 transition duration-200"
+            >
+              Delete Patient
+            </button>
+          </div>
 
           {isHistoryFormOpen && (
             <>
