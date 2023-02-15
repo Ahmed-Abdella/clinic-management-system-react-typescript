@@ -1,17 +1,18 @@
-import { useState } from "react";
-import { useSignup } from "../hooks/useSignup";
+import { useState } from "react"
 
-import useInput from "../hooks/useInput";
+import { useSignup } from "../hooks/useSignup"
 
-import PhoneInput from "react-phone-number-input";
-import "react-phone-number-input/style.css";
+import useInput from "../hooks/useInput"
 
-import { isPossiblePhoneNumber } from "react-phone-number-input";
-import { getCountryCallingCode } from "react-phone-number-input";
-import { Link } from "react-router-dom";
+import PhoneInput from "react-phone-number-input"
+import "react-phone-number-input/style.css"
+
+import { isPossiblePhoneNumber } from "react-phone-number-input"
+import { getCountryCallingCode } from "react-phone-number-input"
+import { Link } from "react-router-dom"
 
 export default function Signup() {
-  const { error, signup, isPending } = useSignup();
+  const { error, signup, isPending } = useSignup()
 
   // USING A CUSTOM HOOK TO VALIDATE MY CUSTOM INPUT________
   // AND USE DESTRUCTION TO SAVE VALUES IN CONSTS LIKE (EMAIL, PASSWORD)
@@ -23,7 +24,7 @@ export default function Signup() {
     hasError: firstNameHasError,
     valueChangeHandler: firstNameChangeHandler,
     valueBlurHandler: firstNameBlurHandler,
-  } = useInput((value) => value.trim() !== "");
+  } = useInput((value) => value.trim() !== "")
 
   const {
     value: lastName,
@@ -32,7 +33,7 @@ export default function Signup() {
     hasError: lastNameHasError,
     valueChangeHandler: lastNameChangeHandler,
     valueBlurHandler: lastNameBlurHandler,
-  } = useInput((value) => value.trim() !== "");
+  } = useInput((value) => value.trim() !== "")
 
   const {
     value: email,
@@ -41,9 +42,7 @@ export default function Signup() {
     hasError: emailHasError,
     valueChangeHandler: emailChangeHandler,
     valueBlurHandler: emailBlurHandler,
-  } = useInput((value) =>
-    /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(value.trim())
-  );
+  } = useInput((value) => /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(value.trim()))
 
   const {
     value: password,
@@ -54,20 +53,20 @@ export default function Signup() {
     valueBlurHandler: passwordBlurHandler,
   } = useInput((value) =>
     /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,15}$/.test(value.trim())
-  );
+  )
 
   // VALIDATE THE react-phone-number-input PACKAGE
-  const [phoneNumber, setPhoneNumber] = useState("");
-  const [country, setCountry] = useState("");
-  const [phoneNumberIsTouched, setPhoneNumberIsTouched] = useState(false);
-  const phoneNumberIsValid = isPossiblePhoneNumber(phoneNumber);
-  const phoneNumberHasError = phoneNumberIsTouched && !phoneNumberIsValid;
+  const [phoneNumber, setPhoneNumber] = useState("")
+  const [country, setCountry] = useState("")
+  const [phoneNumberIsTouched, setPhoneNumberIsTouched] = useState(false)
+  const phoneNumberIsValid = isPossiblePhoneNumber(phoneNumber)
+  const phoneNumberHasError = phoneNumberIsTouched && !phoneNumberIsValid
 
   // CHECKING FOR CONFIRMATION PASSWORD ERROR
-  const [confirmedPassword, setConfirmedPassword] = useState("");
-  const [confirmedPasswordError, setConfirmedPasswordError] = useState(false);
+  const [confirmedPassword, setConfirmedPassword] = useState("")
+  const [confirmedPasswordError, setConfirmedPasswordError] = useState(false)
 
-  let formIsValid = false;
+  let formIsValid = false
 
   if (
     firstNameIsValid &&
@@ -77,26 +76,28 @@ export default function Signup() {
     phoneNumberIsValid &&
     password === confirmedPassword
   ) {
-    formIsValid = true;
+    formIsValid = true
   }
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    setFirstNameTouched(true);
-    setLastNameTouched(true);
-    setEmailTouched(true);
-    setPasswordTouched(true);
-    setPhoneNumberIsTouched(true);
+    event.preventDefault()
+    setFirstNameTouched(true)
+    setLastNameTouched(true)
+    setEmailTouched(true)
+    setPasswordTouched(true)
+    setPhoneNumberIsTouched(true)
 
     // _____VALIDATION______
 
     if (!formIsValid) {
       if (password !== confirmedPassword.trim()) {
-        setConfirmedPasswordError(true);
-        setConfirmedPassword("");
+        setConfirmedPasswordError(true)
+        setConfirmedPassword("")
       }
-      return;
+      return
     }
+
+    const displayName = `${firstName} ${lastName}`
 
     console.log(
       firstName,
@@ -105,10 +106,10 @@ export default function Signup() {
       password,
       phoneNumber,
       typeof phoneNumber
-    );
+    )
 
-    signup(email, password);
-  };
+    signup(email, password, displayName)
+  }
 
   return (
     <div className="  px-96  xl:px-56 lg:px-32 md:px-12 sm:px-4 pt-6 pb-12">
@@ -184,8 +185,8 @@ export default function Signup() {
             type="password"
             value={confirmedPassword}
             onChange={(e) => {
-              setConfirmedPassword(e.target.value.trim());
-              setConfirmedPasswordError(false);
+              setConfirmedPassword(e.target.value.trim())
+              setConfirmedPasswordError(false)
             }}
           ></input>
           {confirmedPasswordError && (
@@ -203,11 +204,11 @@ export default function Signup() {
             placeholder="Enter your phone number"
             value={phoneNumber}
             onChange={(phoneNumber) => {
-              setPhoneNumber(phoneNumber ?? "");
+              setPhoneNumber(phoneNumber ?? "")
               // if (phoneNumber === undefined) {
               //   setPhoneNumber("");
               // }
-              setPhoneNumberIsTouched(false);
+              setPhoneNumberIsTouched(false)
             }}
             onCountryChange={() => setCountry}
             onBlur={() => setPhoneNumberIsTouched(true)}
@@ -242,5 +243,5 @@ export default function Signup() {
         </Link>
       </p>
     </div>
-  );
+  )
 }

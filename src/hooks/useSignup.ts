@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useState } from "react"
 
-import { auth } from "../firebase/firebase";
+import { auth } from "../firebase/firebase"
+import { updateProfile } from "firebase/auth"
 
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import { useAuthContext } from "./useAuthContext";
+import { createUserWithEmailAndPassword } from "firebase/auth"
+import { useAuthContext } from "./useAuthContext"
 
 export const useSignup = () => {
   // const [error, setError] = useState<string | null>(null);
@@ -22,32 +23,42 @@ export const useSignup = () => {
 
   // return { error, signup };
 
-  const [error, setError] = useState<string | null>(null);
-  const [isPending, setIsPending] = useState(false);
-  const { dispatch } = useAuthContext();
+  const [error, setError] = useState<string | null>(null)
+  const [isPending, setIsPending] = useState(false)
+  const { dispatch } = useAuthContext()
 
-  const signup = async (email: string, password: string) => {
-    setError(null);
-    setIsPending(true);
+  const signup = async (
+    email: string,
+    password: string,
+    displayName: string
+  ) => {
+    setError(null)
+    setIsPending(true)
 
     try {
-      const res = await createUserWithEmailAndPassword(auth, email, password);
+      const res = await createUserWithEmailAndPassword(auth, email, password)
+
+      if (auth.currentUser) {
+        await updateProfile(auth.currentUser, {
+          displayName: displayName,
+        })
+      }
 
       if (dispatch) {
-        dispatch({ type: "LOGIN", payload: res.user });
+        dispatch({ type: "LOGIN", payload: res.user })
       }
 
-      setIsPending(false);
-      setError(null);
+      setIsPending(false)
+      setError(null)
     } catch (err) {
       if (err instanceof Error) {
-        setIsPending(false);
-        setError(err.message);
+        setIsPending(false)
+        setError(err.message)
       } else {
-        console.log("Unexpected error", err);
+        console.log("Unexpected error", err)
       }
     }
-  };
+  }
 
-  return { error, isPending, signup };
-};
+  return { error, isPending, signup }
+}

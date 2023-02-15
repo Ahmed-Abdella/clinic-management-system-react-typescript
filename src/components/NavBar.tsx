@@ -12,22 +12,29 @@ import { useLogout } from "../hooks/useLogout"
 
 import { BiLogOutCircle } from "react-icons/Bi"
 
+import { SiAsciidoctor } from "react-icons/Si"
+
+import { useAuthContext } from "../hooks/useAuthContext"
+
 const NavBar: React.FC = () => {
   const { logout } = useLogout()
+  const { user } = useAuthContext()
   return (
     <div className="flex flex-col w-48  fixed top-0 left-0 bottom-0 min-h-screen border-r lg:translate-x-[-20rem] transition duration-500  [&_svg]:text-sky-600 ">
       <div className="w-full flex flex-col items-center px-2 mt-10">
-        <div className="inline-block  h-16 w-16 rounded-full overflow-hidden">
-          <img
+        {/* <div className="inline-block  h-16 w-16 rounded-full overflow-hidden"> */}
+        {/* <img
             className="w-full h-full object-cover"
             src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80"
             alt={"profile picture"}
-          />
-        </div>
+          /> */}
+
+        {/* </div> */}
+        <SiAsciidoctor className="text-3xl mb-2" />
 
         <p className="w-36 text-sm  text-center">
           <span className="font-semibold">Dr.</span>
-          {`Sara Ahmed Mohamed`}
+          {`${user?.displayName}`}
         </p>
       </div>
 
