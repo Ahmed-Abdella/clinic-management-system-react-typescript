@@ -1,10 +1,5 @@
 import React, { useState, useRef, useEffect } from "react"
 
-import { WithFieldValue, DocumentData } from "firebase/firestore"
-
-import { addDoc, collection } from "firebase/firestore"
-import { db } from "../firebase/firebase"
-
 import { RxCross2 } from "react-icons/rx"
 
 import { useFirestore } from "../hooks/useFirestore"
@@ -14,7 +9,8 @@ import { Timestamp } from "firebase/firestore"
 import { useNavigate } from "react-router-dom"
 
 import { useAuthContext } from "../hooks/useAuthContext"
-import Login from "./Login"
+
+import useAddDocument from "../hooks/useAddDocument"
 
 interface PatientHistory {
   diagnosis?: string
@@ -42,11 +38,6 @@ const AddPatient: React.FC = () => {
   const [newSpice, setNewSpice] = useState<string>("")
   const [spices, setSpices] = useState<string[]>([])
 
-  const [document, setDocument] = useState<any>(null)
-  const [isPending, setIsPending] = useState<any>(false)
-  const [success, setSuccess] = useState<any>(false)
-  const [error, setError] = useState<any>("")
-
   // const { addDocument, response } = useFirestore<PatientData>("patients")
 
   const patientHistory = {
@@ -59,10 +50,6 @@ const AddPatient: React.FC = () => {
   const { user } = useAuthContext()
 
   const navigate = useNavigate()
-
-  // const onGenderChange = (e:React.FormEvent<HTMLFormElement>) => {
-
-  // }
 
   const spicesInput = useRef<HTMLInputElement | null>(null)
 
@@ -87,40 +74,23 @@ const AddPatient: React.FC = () => {
     }
   }
 
+  const [addDocument, document, error, isPending, success] =
+    useAddDocument("patients")
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    setIsPending(true)
 
     const createdAt = Timestamp.fromDate(new Date())
     const doctorUid = user?.uid
 
-    const ref = collection(db, "patients")
-
-    const addDocument = async () => {
-      try {
-        const addedDocument = await addDoc(ref, {
-          createdAt,
-          doctorUid,
-          patientName,
-          patientAge,
-          gender,
-          patientHistory: [patientHistory],
-        })
-        setIsPending(false)
-        setSuccess(true)
-        setDocument(addedDocument)
-      } catch (err) {
-        if (err instanceof Error) {
-          setIsPending(false)
-          setSuccess(false)
-          setError(err.message)
-        }
-      }
-    }
-
-    addDocument()
-
-    console.log(document, error, isPending)
+    addDocument({
+      createdAt,
+      doctorUid,
+      patientName,
+      patientAge,
+      gender,
+      patientHistory: [patientHistory],
+    })
 
     // await addDocument({
     //   createdAt,
@@ -133,11 +103,11 @@ const AddPatient: React.FC = () => {
   }
 
   useEffect(() => {
-    console.log(document)
+    console.log(document, error)
     if (success) {
       navigate(`/patient/${document.id}`)
     }
-  }, [document])
+  }, [document, error, success, isPending])
 
   return (
     <form
@@ -148,6 +118,10 @@ const AddPatient: React.FC = () => {
         <p className="fixed top-6 right-10 bg-green-400 p-4">
           patient added succesfully
         </p>
+      )}
+
+      {error && (
+        <p className="fixed top-6 right-10 bg-red-400 p-4">Can't add patient</p>
       )}
       <label>
         <span>Patient name:</span>
