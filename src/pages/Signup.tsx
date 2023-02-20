@@ -66,6 +66,9 @@ export default function Signup() {
   const [confirmedPassword, setConfirmedPassword] = useState("")
   const [confirmedPasswordError, setConfirmedPasswordError] = useState(false)
 
+  const [thumbnail, setThumbnail] = useState<any>(null)
+  const [thumbnailError, setThumbnailError] = useState<null | string>(null)
+
   let formIsValid = false
 
   if (
@@ -77,6 +80,31 @@ export default function Signup() {
     password === confirmedPassword
   ) {
     formIsValid = true
+  }
+
+  const handleFileChnage = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setThumbnail(null)
+    let selected = e.target.files![0]
+    console.log(selected)
+
+    //check the selected file
+    if (!selected) {
+      setThumbnailError("please select a file")
+      return
+    }
+
+    if (!selected.type.includes("image")) {
+      setThumbnailError("selected file must be an image")
+      return
+    }
+
+    if (selected.size > 100000) {
+      setThumbnailError("image file size must be less than 100KB")
+      return
+    }
+
+    setThumbnailError(null)
+    setThumbnail(selected)
   }
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -108,7 +136,7 @@ export default function Signup() {
       typeof phoneNumber
     )
 
-    signup(email, password, displayName)
+    signup(email, password, displayName, thumbnail, phoneNumber)
   }
 
   return (
@@ -216,6 +244,14 @@ export default function Signup() {
 
           {phoneNumberHasError && (
             <div className="text-red-500 text-sm">Invalid Phone Number</div>
+          )}
+        </label>
+
+        <label>
+          <span>profile thumbnail:</span>
+          <input required type="file" onChange={handleFileChnage}></input>
+          {thumbnailError && (
+            <div className="text-red-500">{thumbnailError}</div>
           )}
         </label>
 
