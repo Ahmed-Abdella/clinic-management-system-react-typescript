@@ -23,7 +23,8 @@ function App() {
           {user && <NavBar />}
 
           <div className={`${user ? "px-16 ml-48 lg:ml-2" : "ml-2"} `}>
-            <Header />
+            {user && <Header />}
+
             <Routes>
               <Route path="/" element={user ? <Dashboard /> : <Login />} />
               <Route
