@@ -1,5 +1,10 @@
-const Dashboard: React.FC = () => {
-  return <div>Dashboard</div>;
-};
+import { useAuthContext } from "../hooks/useAuthContext"
 
-export default Dashboard;
+const Dashboard: React.FC = () => {
+  const { user } = useAuthContext()
+  console.log(user)
+
+  return <div>Dashboard</div>
+}
+
+export default Dashboard

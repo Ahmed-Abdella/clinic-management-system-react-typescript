@@ -19,7 +19,7 @@ interface StateType<T> {
   document: null | T
   isPending: boolean
   error: null | string
-  success: null | boolean
+  success: boolean
 }
 
 interface ActionType {
@@ -33,7 +33,7 @@ let initialState: StateType<null> = {
   document: null,
   isPending: false,
   error: null,
-  success: null,
+  success: false,
 }
 
 const firestoreReducer = <T>(state: StateType<T>, action: ActionType) => {
@@ -71,6 +71,7 @@ const firestoreReducer = <T>(state: StateType<T>, action: ActionType) => {
 export const useFirestore = <T>(coll: string) => {
   const [response, dispatch] = useReducer(firestoreReducer<T>, initialState)
   const [isCancelled, setIsCancelled] = useState(false)
+  const [document, setDocument] = useState<any>(null)
 
   // coll ref
   const ref = collection(db, coll)
@@ -83,11 +84,16 @@ export const useFirestore = <T>(coll: string) => {
   }
 
   // add a document
+
   const addDocument = async (doc: WithFieldValue<DocumentData>) => {
     dispatchIfNotCancelled({ type: "IS_PENDING" })
 
     try {
       const addedDocument = await addDoc(ref, { ...doc })
+      setDocument(addedDocument)
+      console.log(document)
+      console.log(addedDocument)
+
       dispatchIfNotCancelled({
         type: "ADDED_DOCUMENT",
         payload: addedDocument,
@@ -98,6 +104,23 @@ export const useFirestore = <T>(coll: string) => {
       }
     }
   }
+
+  // const addDocument = (doc: WithFieldValue<DocumentData>) => {
+  //   dispatchIfNotCancelled({ type: "IS_PENDING" })
+
+  //   addDoc(ref, { ...doc })
+  //     .then((addedDocument) => {
+  //       dispatchIfNotCancelled({
+  //         type: "ADDED_DOCUMENT",
+  //         payload: addedDocument,
+  //       })
+  //     })
+  //     .catch((err) => {
+  //       if (err instanceof Error) {
+  //         dispatchIfNotCancelled({ type: "ERROR", payload: err.message })
+  //       }
+  //     })
+  // }
 
   // delete a document
   const deleteDocument = async (id: string) => {
@@ -113,7 +136,7 @@ export const useFirestore = <T>(coll: string) => {
   }
 
   const updateDocument = async (id: string, updates: any) => {
-    dispatch({ type: "IS_PENDING" })
+    dispatchIfNotCancelled({ type: "IS_PENDING" })
     try {
       const docRef: DocumentReference = doc(db, coll, id)
       const updatedDocument = await updateDoc(docRef, updates)
