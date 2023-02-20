@@ -6,6 +6,15 @@ import { updateProfile } from "firebase/auth"
 import { createUserWithEmailAndPassword } from "firebase/auth"
 import { useAuthContext } from "./useAuthContext"
 
+import { storage } from "../firebase/firebase"
+
+import {
+  getDownloadURL,
+  ref,
+  uploadBytes,
+  uploadBytesResumable,
+} from "firebase/storage"
+
 export const useSignup = () => {
   // const [error, setError] = useState<string | null>(null);
 
@@ -30,7 +39,9 @@ export const useSignup = () => {
   const signup = async (
     email: string,
     password: string,
-    displayName: string
+    displayName: string,
+
+    thumbnail: any
   ) => {
     setError(null)
     setIsPending(true)
@@ -38,9 +49,16 @@ export const useSignup = () => {
     try {
       const res = await createUserWithEmailAndPassword(auth, email, password)
 
+      const uploadPath = `thumbnails/${res.user.uid}/${thumbnail.name}`
+      const storageRef = ref(storage, uploadPath)
+      const snapshot = await uploadBytes(storageRef, thumbnail)
+
+      const imgURL = await getDownloadURL(snapshot.ref)
+
       if (auth.currentUser) {
         await updateProfile(auth.currentUser, {
           displayName: displayName,
+          photoURL: imgURL,
         })
       }
 
