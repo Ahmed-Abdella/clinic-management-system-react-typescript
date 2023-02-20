@@ -136,7 +136,7 @@ export default function Signup() {
       typeof phoneNumber
     )
 
-    signup(email, password, displayName, thumbnail, phoneNumber)
+    signup(email, password, displayName, thumbnail)
   }
 
   return (

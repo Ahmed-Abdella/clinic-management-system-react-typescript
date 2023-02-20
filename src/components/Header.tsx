@@ -1,14 +1,24 @@
-import { Link } from "react-router-dom";
-import { useAuthContext } from "../hooks/useAuthContext";
-import { useLogout } from "../hooks/useLogout";
+import { Link } from "react-router-dom"
+import { useAuthContext } from "../hooks/useAuthContext"
+import { useLogout } from "../hooks/useLogout"
 
 const Header = () => {
-  const { user } = useAuthContext();
+  const { user } = useAuthContext()
 
-  const { logout } = useLogout();
+  const { logout } = useLogout()
   return (
     <div className=" flex items-center left-0 py-6 ">
-      <div className="text-2xl font-bold">LOGO</div>
+      <div className="inline-block  h-10 w-10 rounded-full overflow-hidden">
+        <img
+          className="w-full h-full object-cover"
+          src={user?.photoURL!}
+          alt={"profile picture"}
+        />
+      </div>
+      <p className="w-36   text-center">
+        <span className="font-semibold">Dr. </span>
+        {`${user?.displayName}`}
+      </p>
       <div className="ml-auto">
         <ul className=" flex items-center justify-center   [&>*]:[&>*]:px-2 [&>*]:[&>*]:py-2 [&>*]:[&>*]:rounded-lg    ">
           {!user && (
@@ -46,7 +56,7 @@ const Header = () => {
         </ul>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Header;
+export default Header
