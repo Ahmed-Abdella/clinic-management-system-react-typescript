@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react"
 
-import { RxCross2 } from "react-icons/Rx"
+import { MdOutlineCancel } from "react-icons/Md"
 
 import { useFirestore } from "../hooks/useFirestore"
 
@@ -222,7 +222,7 @@ const AddPatient: React.FC = () => {
               }}
               className="self-start text-sm  cursor-pointer  rounded-full hover:bg-gray-400 transition duration-75"
             >
-              <RxCross2 />
+              <MdOutlineCancel />
             </button>
           </div>
         ))}

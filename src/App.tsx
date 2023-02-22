@@ -17,7 +17,7 @@ import { useAuthContext } from "./hooks/useAuthContext"
 function App() {
   const { user, authIsReady } = useAuthContext()
   return (
-    <div className="font-sans   min-h-screen ">
+    <div className="font-sans lg:text-sm">
       {authIsReady && (
         <BrowserRouter>
           {user && <NavBar />}
@@ -26,7 +26,7 @@ function App() {
           <div
             className={`${
               user
-                ? " ml-48 lg:ml-0 mt-28 px-24 xl:px-12 lg:px-10 md:px-6 sm:px-4 "
+                ? " ml-48 lg:ml-0 mt-20 px-24 xl:px-12 lg:px-10 md:px-6 sm:px-4 "
                 : "px-12"
             } `}
           >

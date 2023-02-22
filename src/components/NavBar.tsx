@@ -2,14 +2,8 @@ import { useState } from "react"
 
 import { Form, NavLink } from "react-router-dom"
 
-import { RxDashboard } from "react-icons/Rx"
-
-import { MdSchedule } from "react-icons/Md"
-import {
-  AiOutlineUserAdd,
-  AiOutlineMenu,
-  AiOutlineArrowLeft,
-} from "react-icons/Ai"
+import { MdSchedule, MdOutlineSpaceDashboard } from "react-icons/Md"
+import { IoMdPersonAdd, IoIosMenu, IoMdArrowBack } from "react-icons/Io"
 
 import { BsPeople } from "react-icons/Bs"
 
@@ -28,12 +22,12 @@ const NavBar: React.FC = () => {
   return (
     <>
       {!barIsOpen ? (
-        <AiOutlineMenu
+        <IoIosMenu
           onClick={() => setBarIsOpen(true)}
           className="drop-shadow-2xl hidden text-2xl cursor-pointer lg:block fixed top-4 left-4 z-40"
         />
       ) : (
-        <AiOutlineArrowLeft
+        <IoMdArrowBack
           onClick={() => setBarIsOpen(false)}
           className="hidden text-2xl lg:block cursor-pointer fixed top-4 left-4 z-40"
         />
@@ -58,7 +52,7 @@ const NavBar: React.FC = () => {
         <ul className=" text-gray-600 text-base   flex flex-col gap-2   py-10 [&>*]:[&>*]:flex [&>*]:[&>*]:items-center [&>*]:[&>*]:[&>*]:mr-4 [&>*]:[&>*]:px-4 [&>*]:[&>*]:py-1 [&>*]:[&>*]:border-r-4 [&>*]:[&>*]:border-transparent   [&>*]:[&>*]:rounded-r-sm w-full   ">
           <li onClick={() => setBarIsOpen(false)}>
             <NavLink className="" to={"/"}>
-              <RxDashboard />
+              <MdOutlineSpaceDashboard />
               <p>Dashboard</p>
             </NavLink>
           </li>
@@ -80,7 +74,7 @@ const NavBar: React.FC = () => {
 
           <li onClick={() => setBarIsOpen(false)}>
             <NavLink className="" to={"/add-patient"}>
-              <AiOutlineUserAdd />
+              <IoMdPersonAdd />
 
               <p> Add Patient</p>
             </NavLink>

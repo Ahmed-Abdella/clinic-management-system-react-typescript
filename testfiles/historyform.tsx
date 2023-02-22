@@ -1,4 +1,5 @@
-// import { RxCross2 } from "react-icons/rx"
+// import { MdOutlineCancel } from "react-icons/Md"
+
 // import { useRef, useState } from "react"
 // import { Timestamp } from "firebase/firestore"
 
@@ -108,7 +109,7 @@
 //               }}
 //               className="self-start text-sm  cursor-pointer  rounded-full hover:bg-gray-400 transition duration-75"
 //             >
-//               <RxCross2 />
+//               <MdOutlineCancel />
 //             </button>
 //           </div>
 //         ))}
