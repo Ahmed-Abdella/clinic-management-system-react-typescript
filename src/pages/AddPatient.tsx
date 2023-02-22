@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react"
 
-import { RxCross2 } from "react-icons/rx"
+import { RxCross2 } from "react-icons/Rx"
 
 import { useFirestore } from "../hooks/useFirestore"
 
@@ -111,7 +111,7 @@ const AddPatient: React.FC = () => {
 
   return (
     <form
-      className="flex flex-col w-full px-36 pb-6 [&_label]:mt-6 [&>label]:flex [&>label]:flex-col [&_input]:bg-gray-50  [&_input]:mt-1 [&_input]:p-2  [&_input]:border-b  [&_input]:border-sky-600      [&_input]:outline-none "
+      className="flex flex-col w-full px-36 xl:px-20 lg:px-12 md:px-4 sm:px-2  pb-6 [&_label]:mt-6 [&>label]:flex [&>label]:flex-col [&_input]:bg-gray-50  [&_input]:mt-1 [&_input]:p-2  [&_input]:border-b  [&_input]:border-sky-600      [&_input]:outline-none "
       onSubmit={handleSubmit}
     >
       {document && (

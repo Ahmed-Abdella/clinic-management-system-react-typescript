@@ -6,7 +6,7 @@ import { useFirestore } from "../hooks/useFirestore"
 
 // import PatientHistoryForm from "../components/PatientHistoryForm"
 
-import { RxCross2 } from "react-icons/rx"
+import { RxCross2 } from "react-icons/Rx"
 import { useRef, useState } from "react"
 import { Timestamp } from "firebase/firestore"
 import { MdPerson } from "react-icons/Md"
@@ -214,11 +214,11 @@ export default function Patient() {
             <>
               <div
                 onClick={() => setIsHistoryFormOpen(false)}
-                className=" px-40 bg-gray-200 bg-opacity-80 fixed inset-0 "
+                className="z-40 px-40 lg:px-36 md:px-24 sm:px-4 bg-gray-200 bg-opacity-80 fixed inset-0 "
               >
                 <button
                   onClick={() => setIsHistoryFormOpen(false)}
-                  className="fixed top-10 right-10  text-4xl text-sky-600"
+                  className="fixed top-4 right-4  text-2xl text-sky-600"
                 >
                   X
                 </button>
@@ -226,7 +226,7 @@ export default function Patient() {
 
               <form
                 onClick={(e) => e.stopPropagation()}
-                className="bg-white z-10  fixed inset-x-36 inset-y-8 overflow-y-scroll flex flex-col px-10 pb-6 [&_label]:mt-6 [&>label]:flex [&>label]:flex-col [&_input]:bg-gray-50  [&_input]:mt-1 [&_input]:p-2  [&_input]:border-b  [&_input]:border-sky-600      [&_input]:outline-none "
+                className="bg-white rounded-lg z-40  fixed inset-x-36 inset-y-12 xl:inset-x-24 lg:inset-x-20 md:inset-x-12 sm:inset-x-4  overflow-y-scroll flex flex-col px-10 pb-6 [&_label]:mt-6 [&>label]:flex [&>label]:flex-col [&_input]:bg-gray-50  [&_input]:mt-1 [&_input]:p-2  [&_input]:border-b  [&_input]:border-sky-600      [&_input]:outline-none "
                 onSubmit={handleSubmit}
               >
                 <label>

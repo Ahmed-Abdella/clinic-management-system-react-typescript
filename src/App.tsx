@@ -26,8 +26,8 @@ function App() {
           <div
             className={`${
               user
-                ? " ml-48 lg:ml-0 mt-28 px-24 xl:px-12 lg:px-6 md:px-4 sm:px-2 "
-                : "ml-2"
+                ? " ml-48 lg:ml-0 mt-28 px-24 xl:px-12 lg:px-10 md:px-6 sm:px-4 "
+                : "px-12"
             } `}
           >
             <Routes>
