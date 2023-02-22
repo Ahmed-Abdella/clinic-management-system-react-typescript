@@ -6,7 +6,7 @@ import { useFirestore } from "../hooks/useFirestore"
 
 // import PatientHistoryForm from "../components/PatientHistoryForm"
 
-import { RxCross2 } from "react-icons/Rx"
+import { MdOutlineCancel } from "react-icons/Md"
 import { useRef, useState } from "react"
 import { Timestamp } from "firebase/firestore"
 import { MdPerson } from "react-icons/Md"
@@ -114,9 +114,9 @@ export default function Patient() {
     <>
       {patient && (
         <div className="flex flex-col py-4 ">
-          <div className="flex items-center gap-2 [&_span]:mr-1 [&_span]:text-sky-500">
-            <div className="font-semibold text-lg flex items-center ">
-              <MdPerson className="mr-2 text-sky-500" />
+          <div className="flex items-center gap-0  [&_span]:mr-1 [&_span]:text-sky-500 lg:text-sm md:text-xs">
+            <div className="font-semibold text-lg lg:text-sm sm:text-xs  flex items-center ">
+              <MdPerson className="mr-2 lg:mr-1 text-sky-500" />
 
               <p className="">{patient?.patientName}</p>
             </div>
@@ -131,7 +131,7 @@ export default function Patient() {
               <span>Gender:</span>
               {patient?.gender}
             </div>
-            <div className="ml-4 text-gray-400 text-sm">
+            <div className="ml-4 text-gray-400 text-sm lg:text-xs">
               {String(patient?.createdAt.toDate().toDateString())}
             </div>
           </div>
@@ -145,7 +145,10 @@ export default function Patient() {
               .sort((a, b) => b.createdAt.toMillis() - a.createdAt.toMillis())
               .map((history, i) => {
                 return (
-                  <div key={i} className="mt-10">
+                  <div
+                    key={i}
+                    className="mt-10 [&_h4]:text-sky-600 [&_h4]:text-lg [&_h4]:lg:text-base  [&_h4]:font-semibold"
+                  >
                     <div className="mt-4 mb-2">
                       <span className="text-gray-400 mr-4">
                         Patient History on:
@@ -156,24 +159,18 @@ export default function Patient() {
                     </div>
                     <div className="mt-4 bg-white p-4 shadow rounded-xl">
                       <div className="mt-2">
-                        <h4 className=" text-sky-600 text-lg font-semibold">
-                          Diagnosis
-                        </h4>
+                        <h4 className=" ">Diagnosis</h4>
 
                         <p>{history.diagnosis}</p>
                       </div>
                       <div className="mt-6">
-                        <h4 className=" text-sky-600 text-lg font-semibold">
-                          Notes
-                        </h4>
+                        <h4 className=" ">Notes</h4>
 
                         <p>{history.notes}</p>
                       </div>
 
                       <div className="mt-6">
-                        <h4 className=" text-sky-600 text-lg font-semibold">
-                          Medicines:
-                        </h4>
+                        <h4 className=" ">Medicines:</h4>
 
                         <ul>
                           {history.spices?.map((spice) => {
@@ -283,7 +280,7 @@ export default function Patient() {
                         }}
                         className="self-start text-sm  cursor-pointer  rounded-full hover:bg-gray-400 transition duration-75"
                       >
-                        <RxCross2 />
+                        <MdOutlineCancel />
                       </button>
                     </div>
                   ))}
