@@ -56,7 +56,7 @@ export default function Signup() {
   )
 
   // VALIDATE THE react-phone-number-input PACKAGE
-  const [phoneNumber, setPhoneNumber] = useState("")
+  const [phoneNumber, setPhoneNumber] = useState<string>("")
   const [country, setCountry] = useState("")
   const [phoneNumberIsTouched, setPhoneNumberIsTouched] = useState(false)
   const phoneNumberIsValid = isPossiblePhoneNumber(phoneNumber)
@@ -77,7 +77,8 @@ export default function Signup() {
     emailIsValid &&
     passwordIsValid &&
     phoneNumberIsValid &&
-    password === confirmedPassword
+    password === confirmedPassword &&
+    !thumbnailError
   ) {
     formIsValid = true
   }

@@ -5,7 +5,7 @@ export default function PatientsList({ patients }: { patients: any[] }) {
       {patients.map((patient) => (
         <div
           key={patient.id}
-          className="border-b flex items-center  px-4  bg-sky-50 hover:bg-sky-100 transition duration-100"
+          className="border-b flex items-center  px-4  odd:bg-sky-50 even:bg-white hover:bg-sky-100 transition duration-100"
         >
           <PatientItem patient={patient} />
         </div>

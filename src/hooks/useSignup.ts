@@ -1,19 +1,14 @@
 import { useState } from "react"
 
 import { auth } from "../firebase/firebase"
-import { updateProfile } from "firebase/auth"
+import { updatePhoneNumber, updateProfile } from "firebase/auth"
 
 import { createUserWithEmailAndPassword } from "firebase/auth"
 import { useAuthContext } from "./useAuthContext"
 
 import { storage } from "../firebase/firebase"
 
-import {
-  getDownloadURL,
-  ref,
-  uploadBytes,
-  uploadBytesResumable,
-} from "firebase/storage"
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage"
 
 export const useSignup = () => {
   // const [error, setError] = useState<string | null>(null);
@@ -60,6 +55,8 @@ export const useSignup = () => {
           displayName: displayName,
           photoURL: imgURL,
         })
+
+        // await updatePhoneNumber(auth.currentUser, phoneNumber)
       }
 
       if (dispatch) {

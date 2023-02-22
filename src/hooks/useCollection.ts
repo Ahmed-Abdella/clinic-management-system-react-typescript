@@ -56,7 +56,7 @@ export function useCollection<T>(
 
     const unsub = onSnapshot(
       ref,
-      (snapshot: any) => {
+      (snapshot: QuerySnapshot) => {
         setIsPending(false)
         let results: T[] = []
         snapshot.docs.forEach((doc: any) => {
