@@ -20,18 +20,18 @@ export default function PatientItem({ patient }: any) {
     <>
       <Link
         to={`/patient/${patient.id}`}
-        className="py-2 mr-2 flex-grow [&_span]:text-gray-500   grid grid-cols-5 gap-2 items-center justify-between transition duration-200  "
+        className="py-2 mr-2 flex-grow [&_span]:text-gray-500 text-sm md:text-xs  grid grid-cols-5 lg:grid-cols-9 gap-2 md:gap-0 items-center justify-between transition duration-200  "
       >
-        <div className="col-span-3   transition duration-75 flex items-center ">
+        <div className="col-span-3 lg:col-span-5   transition duration-75 flex items-center ">
           <MdPerson className="inline-block mr-2" />
           <p className="text-sky-700">{patient.patientName}</p>
         </div>
 
-        <div className=" ">
+        <div className=" lg:col-span-2">
           <span>Age: </span>
           {patient.patientAge}
         </div>
-        <div>
+        <div className="lg:col-span-2">
           <span>Gender: </span>
           {patient.gender}
         </div>
@@ -41,9 +41,9 @@ export default function PatientItem({ patient }: any) {
           onClick={(e) => {
             deletePatient(e, patient.id)
           }}
-          className=" text-white text-sm bg-red-500  py-1 px-2 rounded hover:bg-red-600 transition duration-75"
+          className=" text-white text-sm md:text-xs bg-red-500  py-1 px-2 rounded hover:bg-red-600 transition duration-75"
         >
-          {response.isPending ? "Deleting....." : "delete patient"}
+          {response.isPending ? "Deleting..." : "delete"}
         </button>
       </div>
     </>
