@@ -22,9 +22,14 @@ function App() {
         <BrowserRouter>
           {user && <NavBar />}
 
-          <div className={`${user ? "px-16 ml-48 lg:ml-2" : "ml-2"} `}>
-            {user && <Header />}
-
+          {user && <Header />}
+          <div
+            className={`${
+              user
+                ? " ml-48 lg:ml-0 mt-28 px-24 xl:px-12 lg:px-6 md:px-4 sm:px-2 "
+                : "ml-2"
+            } `}
+          >
             <Routes>
               <Route path="/" element={user ? <Dashboard /> : <Login />} />
               <Route

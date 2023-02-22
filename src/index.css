@@ -42,3 +42,8 @@ button:focus-visible {
   background: rgb(254 242 242) !important;
   border-color: rgb(214, 54, 54) !important ;
 }
+
+.blury {
+  backdrop-filter: saturate(180%) blur(5px);
+  background: rgba(255, 255, 255, 0.8);
+}

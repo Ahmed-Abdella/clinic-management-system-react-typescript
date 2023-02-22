@@ -7,7 +7,7 @@ const Header = () => {
 
   const { logout } = useLogout()
   return (
-    <div className=" flex items-center left-0 py-6 ">
+    <div className=" blury flex items-center fixed  border-b shadow top-0 right-0 left-48 lg:left-0 py-2 px-12 ">
       <div className="inline-block  h-10 w-10 rounded-full overflow-hidden">
         <img
           className="w-full h-full object-cover"

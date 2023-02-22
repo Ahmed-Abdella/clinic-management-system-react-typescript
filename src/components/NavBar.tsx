@@ -30,19 +30,19 @@ const NavBar: React.FC = () => {
       {!barIsOpen ? (
         <AiOutlineMenu
           onClick={() => setBarIsOpen(true)}
-          className="hidden text-2xl cursor-pointer lg:block fixed top-8 left-4 z-40"
+          className="drop-shadow-2xl hidden text-2xl cursor-pointer lg:block fixed top-4 left-4 z-40"
         />
       ) : (
         <AiOutlineArrowLeft
           onClick={() => setBarIsOpen(false)}
-          className="hidden text-2xl lg:block cursor-pointer fixed top-8 left-4 z-40"
+          className="hidden text-2xl lg:block cursor-pointer fixed top-4 left-4 z-40"
         />
       )}
 
       {barIsOpen && (
         <div
           onClick={() => setBarIsOpen(false)}
-          className=" hidden lg:block fixed inset-0 bg-gray-600 bg-opacity-20 "
+          className=" hidden lg:block fixed inset-0 bg-gray-600 bg-opacity-20 z-20 "
         ></div>
       )}
 
