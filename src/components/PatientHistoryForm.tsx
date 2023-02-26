@@ -1,44 +1,41 @@
+import { useRef } from "react"
 import { MdOutlineCancel } from "react-icons/Md"
-import { useRef, useState } from "react"
-import { Timestamp } from "firebase/firestore"
 
-interface PatientHistory {
-  diagnosis?: string
-  notes?: string
-  spices?: string[]
-  createdAt: Timestamp
+type SetSpices = (spices: string[]) => void
+type SetSpicesFunc = (SetFunc: SetSpices) => void
+
+interface PatientHistoryProbs {
+  diagnosis: string
+  notes: string
+  spices: string[]
+  newSpice: string
+
+  onDiagnosisChange: (value: string) => void
+  onNotesChange: (value: string) => void
+  onSpicesChange: any
+  onNewSpiceChange: (spice: string) => void
 }
 
-export default function PatientHistoryForm({
-  setHistory,
-}: {
-  setHistory: (patientHistory: PatientHistory[]) => void
-}) {
-  const spicesInput = useRef<HTMLInputElement | null>(null)
-  const [newSpice, setNewSpice] = useState<string>("")
-
-  const [diagnosis, setDiagnosis] = useState<string>("")
-  const [notes, setNotes] = useState<string>("")
-
-  const [spices, setSpices] = useState<string[]>([])
-
-  const patientHistory: PatientHistory = {
-    createdAt: Timestamp.fromDate(new Date()),
-    diagnosis,
-    notes,
-    spices,
-  }
-
+const PatientHistoryForm = ({
+  diagnosis,
+  notes,
+  spices,
+  newSpice,
+  onDiagnosisChange,
+  onNotesChange,
+  onSpicesChange,
+  onNewSpiceChange,
+}: PatientHistoryProbs) => {
   const handleAdd = (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ): void => {
     e.preventDefault()
     const spice = newSpice.trim()
     if (spice && !spices.includes(spice)) {
-      setSpices((prevspices) => [...prevspices, spice])
+      onSpicesChange((prevspices: string[]) => [...prevspices, spice])
     }
 
-    setNewSpice("")
+    onNewSpiceChange("")
 
     spicesInput.current?.focus()
   }
@@ -46,11 +43,11 @@ export default function PatientHistoryForm({
   const removeSpice = (i: string): void => {
     const index = spices.indexOf(i)
     if (index > -1) {
-      setSpices(spices.filter((spice) => spice !== i))
+      onSpicesChange(spices.filter((spice) => spice !== i))
     }
   }
 
-  setHistory([patientHistory])
+  const spicesInput = useRef<HTMLInputElement | null>(null)
 
   return (
     <>
@@ -60,7 +57,7 @@ export default function PatientHistoryForm({
         <textarea
           className="bg-gray-50 h-48 mt-1 p-4 border-b border-sky-600  outline-none"
           value={diagnosis}
-          onChange={(e) => setDiagnosis(e.target.value)}
+          onChange={(e) => onDiagnosisChange(e.target.value)}
         ></textarea>
       </label>
 
@@ -70,7 +67,7 @@ export default function PatientHistoryForm({
         <textarea
           className="bg-gray-50  mt-1 p-4 border-b border-sky-600  outline-none"
           value={notes}
-          onChange={(e) => setNotes(e.target.value)}
+          onChange={(e) => onNotesChange(e.target.value)}
         ></textarea>
       </label>
 
@@ -79,7 +76,7 @@ export default function PatientHistoryForm({
         <div className="spices">
           <input
             type="text"
-            onChange={(e) => setNewSpice(e.target.value)}
+            onChange={(e) => onNewSpiceChange(e.target.value)}
             value={newSpice}
             ref={spicesInput}
           />
@@ -116,3 +113,5 @@ export default function PatientHistoryForm({
     </>
   )
 }
+
+export default PatientHistoryForm
