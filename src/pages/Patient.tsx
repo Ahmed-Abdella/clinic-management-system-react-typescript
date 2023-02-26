@@ -4,10 +4,9 @@ import { useDocument } from "../hooks/useDocument"
 
 import { useFirestore } from "../hooks/useFirestore"
 
-// import PatientHistoryForm from "../components/PatientHistoryForm"
+import PatientHistoryForm from "../components/PatientHistoryForm"
 
-import { MdOutlineCancel } from "react-icons/Md"
-import { useRef, useState } from "react"
+import { useState } from "react"
 import { Timestamp } from "firebase/firestore"
 import { MdPerson } from "react-icons/Md"
 
@@ -30,7 +29,6 @@ interface PatientData {
 export default function Patient() {
   const [isHistoryFormOpen, setIsHistoryFormOpen] = useState<boolean>(false)
 
-  const spicesInput = useRef<HTMLInputElement | null>(null)
   const [newSpice, setNewSpice] = useState<string>("")
 
   const [diagnosis, setDiagnosis] = useState<string>("")
@@ -42,27 +40,6 @@ export default function Patient() {
     useFirestore<PatientData>("patients")
 
   const navigate = useNavigate()
-
-  const handleAdd = (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ): void => {
-    e.preventDefault()
-    const spice = newSpice.trim()
-    if (spice && !spices.includes(spice)) {
-      setSpices((prevspices) => [...prevspices, spice])
-    }
-
-    setNewSpice("")
-
-    spicesInput.current?.focus()
-  }
-
-  const removeSpice = (i: string): void => {
-    const index = spices.indexOf(i)
-    if (index > -1) {
-      setSpices(spices.filter((spice) => spice !== i))
-    }
-  }
 
   const { id } = useParams()
   const {
@@ -226,65 +203,16 @@ export default function Patient() {
                 className="bg-white rounded-lg z-40  fixed inset-x-36 inset-y-12 xl:inset-x-24 lg:inset-x-20 md:inset-x-12 sm:inset-x-4  overflow-y-scroll flex flex-col px-10 pb-6 [&_label]:mt-6 [&>label]:flex [&>label]:flex-col [&_input]:bg-gray-50  [&_input]:mt-1 [&_input]:p-2  [&_input]:border-b  [&_input]:border-sky-600      [&_input]:outline-none "
                 onSubmit={handleSubmit}
               >
-                <label>
-                  <span>Diagnosis:</span>
-
-                  <textarea
-                    className="bg-gray-50 h-48 mt-1 p-4 border-b border-sky-600  outline-none"
-                    value={diagnosis}
-                    onChange={(e) => setDiagnosis(e.target.value)}
-                  ></textarea>
-                </label>
-
-                <label>
-                  <span>Notes:</span>
-
-                  <textarea
-                    className="bg-gray-50  mt-1 p-4 border-b border-sky-600  outline-none"
-                    value={notes}
-                    onChange={(e) => setNotes(e.target.value)}
-                  ></textarea>
-                </label>
-
-                <label>
-                  <span>Medicine</span>
-                  <div className="spices">
-                    <input
-                      type="text"
-                      onChange={(e) => setNewSpice(e.target.value)}
-                      value={newSpice}
-                      ref={spicesInput}
-                    />
-                    <button
-                      className="ml-2 self-center  text-white bg-green-500 hover:bg-green-600 transition duration-75 font-semibold px-2 py-2 rounded-lg "
-                      onClick={handleAdd}
-                    >
-                      Add one
-                    </button>
-                  </div>
-                </label>
-
-                <div className="mt-2 flex flex-wrap items-center h-10">
-                  <span className="mr-4">Current Medicines:</span>
-                  {spices.map((i) => (
-                    <div
-                      className=" flex bg-gray-300 py-1  pl-2  pr-1 rounded mr-1 "
-                      key={i}
-                    >
-                      <span className="mr-2 ">{i}</span>
-
-                      <button
-                        onClick={(e) => {
-                          e.preventDefault()
-                          removeSpice(i)
-                        }}
-                        className="self-start text-sm  cursor-pointer  rounded-full hover:bg-gray-400 transition duration-75"
-                      >
-                        <MdOutlineCancel />
-                      </button>
-                    </div>
-                  ))}
-                </div>
+                <PatientHistoryForm
+                  onDiagnosisChange={(value: string) => setDiagnosis(value)}
+                  onNotesChange={(value: string) => setNotes(value)}
+                  onSpicesChange={(spices: string[]) => setSpices(spices)}
+                  onNewSpiceChange={(spice: string) => setNewSpice(spice)}
+                  spices={spices}
+                  notes={notes}
+                  diagnosis={diagnosis}
+                  newSpice={newSpice}
+                />
                 <button className="mt-8 w-40 self-center bg-sky-600 text-white p-2 rounded-lg hover:bg-sky-700 transition duration-200">
                   Add Patient History
                 </button>
