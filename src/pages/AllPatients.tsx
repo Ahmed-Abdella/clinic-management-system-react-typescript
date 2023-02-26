@@ -33,8 +33,8 @@ const AllPatients = () => {
 
   return (
     <div className="">
-      <div className="mb-6  ">
-        <h2 className=" text-2xl font-semibold">All Patients</h2>
+      <div className="mb-6 flex items-center justify-center ">
+        <h2 className="mr-4 text-2xl font-semibold">All Patients</h2>
 
         {patients && (
           <div className=" text-gray-500 font-medium">
