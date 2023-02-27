@@ -11,22 +11,6 @@ import { storage } from "../firebase/firebase"
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage"
 
 export const useSignup = () => {
-  // const [error, setError] = useState<string | null>(null);
-
-  // const signup = (email: string, password: string) => {
-  //   setError(null);
-
-  //   createUserWithEmailAndPassword(auth, email, password)
-  //     .then((res) => {
-  //       console.log(res.user);
-  //     })
-  //     .catch((err) => {
-  //       setError(err.message);
-  //     });
-  // };
-
-  // return { error, signup };
-
   const [error, setError] = useState<string | null>(null)
   const [isPending, setIsPending] = useState(false)
   const { dispatch } = useAuthContext()
