@@ -1,7 +1,7 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 
 import { auth } from "../firebase/firebase"
-import { updatePhoneNumber, updateProfile } from "firebase/auth"
+import { updateProfile } from "firebase/auth"
 
 import { createUserWithEmailAndPassword } from "firebase/auth"
 import { useAuthContext } from "./useAuthContext"
@@ -11,6 +11,7 @@ import { storage } from "../firebase/firebase"
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage"
 
 export const useSignup = () => {
+  const [isCancelled, setIsCancelled] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const [isPending, setIsPending] = useState(false)
   const { dispatch } = useAuthContext()
@@ -22,8 +23,10 @@ export const useSignup = () => {
 
     thumbnail: any
   ) => {
-    setError(null)
-    setIsPending(true)
+    if (!isCancelled) {
+      setError(null)
+      setIsPending(true)
+    }
 
     try {
       const res = await createUserWithEmailAndPassword(auth, email, password)
@@ -39,25 +42,34 @@ export const useSignup = () => {
           displayName: displayName,
           photoURL: imgURL,
         })
-
-        // await updatePhoneNumber(auth.currentUser, phoneNumber)
       }
 
       if (dispatch) {
         dispatch({ type: "LOGIN", payload: res.user })
       }
-
-      setIsPending(false)
-      setError(null)
+      if (!isCancelled) {
+        setIsPending(false)
+        setError(null)
+      }
     } catch (err) {
       if (err instanceof Error) {
-        setIsPending(false)
-        setError(err.message)
+        if (!isCancelled) {
+          setIsPending(false)
+          setError(err.message)
+        }
       } else {
         console.log("Unexpected error", err)
       }
     }
   }
+
+  useEffect(() => {
+    setIsCancelled(false)
+
+    return () => {
+      setIsCancelled(true)
+    }
+  }, [])
 
   return { error, isPending, signup }
 }
