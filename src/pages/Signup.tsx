@@ -8,11 +8,12 @@ import PhoneInput from "react-phone-number-input"
 import "react-phone-number-input/style.css"
 
 import { isPossiblePhoneNumber } from "react-phone-number-input"
-import { getCountryCallingCode } from "react-phone-number-input"
-import { Link } from "react-router-dom"
+
+import { Link, useNavigate } from "react-router-dom"
 
 export default function Signup() {
   const { error, signup, isPending } = useSignup()
+  const navigate = useNavigate()
 
   // USING A CUSTOM HOOK TO VALIDATE MY CUSTOM INPUT________
   // AND USE DESTRUCTION TO SAVE VALUES IN CONSTS LIKE (EMAIL, PASSWORD)
@@ -108,7 +109,7 @@ export default function Signup() {
     setThumbnail(selected)
   }
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     setFirstNameTouched(true)
     setLastNameTouched(true)
@@ -137,7 +138,8 @@ export default function Signup() {
       typeof phoneNumber
     )
 
-    signup(email, password, displayName, thumbnail)
+    await signup(email, password, displayName, thumbnail)
+    navigate("/")
   }
 
   return (
@@ -234,9 +236,7 @@ export default function Signup() {
             value={phoneNumber}
             onChange={(phoneNumber) => {
               setPhoneNumber(phoneNumber ?? "")
-              // if (phoneNumber === undefined) {
-              //   setPhoneNumber("");
-              // }
+
               setPhoneNumberIsTouched(false)
             }}
             onCountryChange={() => setCountry}

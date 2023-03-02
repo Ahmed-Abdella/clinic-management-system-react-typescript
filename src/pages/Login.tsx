@@ -1,17 +1,19 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useState } from "react"
+import { Link, useNavigate } from "react-router-dom"
 
-import { useLogin } from "../hooks/useLogin";
+import { useLogin } from "../hooks/useLogin"
 
 export default function Login() {
-  const { login, error, isPending } = useLogin();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const { login, error, isPending } = useLogin()
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+  const navigate = useNavigate()
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    login(email, password);
-  };
+    event.preventDefault()
+    await login(email, password)
+    navigate("/")
+  }
   return (
     <div className="px-96  xl:px-56 lg:px-32 md:px-12 sm:px-4 pt-6 pb-12">
       <h2 className="text-center text-2xl mb-6">Login</h2>
@@ -61,5 +63,5 @@ export default function Login() {
         </Link>
       </p>
     </div>
-  );
+  )
 }

@@ -5,6 +5,8 @@ import { Form, NavLink } from "react-router-dom"
 import { MdSchedule, MdOutlineSpaceDashboard } from "react-icons/Md"
 import { IoMdPersonAdd, IoIosMenu, IoMdArrowBack } from "react-icons/Io"
 
+import { useNavigate } from "react-router-dom"
+
 import { BsPeople } from "react-icons/Bs"
 
 import { useLogout } from "../hooks/useLogout"
@@ -19,6 +21,13 @@ const NavBar: React.FC = () => {
   const [barIsOpen, setBarIsOpen] = useState<boolean>(false)
   const { logout } = useLogout()
   const { user } = useAuthContext()
+  const navigate = useNavigate()
+
+  const handleLogout = () => {
+    logout()
+
+    navigate("/login")
+  }
   return (
     <>
       {!barIsOpen ? (
@@ -83,7 +92,7 @@ const NavBar: React.FC = () => {
 
         <button
           className="text-sm flex jusitify-center items-center self-left  text-gray-700 hover:text-black transition duration-100  self-center [&>*]:mr-1  mt-auto mb-10 "
-          onClick={logout}
+          onClick={handleLogout}
         >
           <BiLogOutCircle />
           <span className="font-semibold">logout</span>
