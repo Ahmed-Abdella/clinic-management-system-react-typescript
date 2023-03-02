@@ -73,7 +73,7 @@ const PatientHistoryForm = ({
 
       <label>
         <span>Medicine</span>
-        <div className="spices">
+        <div className="flex">
           <input
             type="text"
             onChange={(e) => onNewSpiceChange(e.target.value)}
@@ -81,16 +81,16 @@ const PatientHistoryForm = ({
             ref={spicesInput}
           />
           <button
-            className="ml-2 self-center  text-white bg-green-500 hover:bg-green-600 transition duration-75 font-semibold px-2 py-2 rounded-lg "
+            className="ml-2 self-center sm:text-xs bg-green-200 hover:bg-green-300 transition duration-75 font-semibold px-2 py-2 rounded-lg "
             onClick={handleAdd}
           >
-            Add one
+            Add
           </button>
         </div>
       </label>
 
-      <div className=" flex flex-wrap items-center h-10">
-        <span className="mr-4">Current Medicines:</span>
+      <div className=" flex flex-wrap items-center mt-2 ">
+        <span className="mr-4 mt-2">Current Medicines:</span>
         {spices.map((i) => (
           <div
             className=" flex bg-gray-300 py-1  pl-2  pr-1 rounded mr-1 "
