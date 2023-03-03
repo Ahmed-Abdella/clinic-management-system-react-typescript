@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 
 import { Form, NavLink } from "react-router-dom"
 
@@ -28,6 +28,14 @@ const NavBar: React.FC = () => {
 
     navigate("/login")
   }
+
+  useEffect(() => {
+    if (barIsOpen) {
+      document.body.style.overflow = "hidden"
+    } else if (!barIsOpen) {
+      document.body.style.overflow = "unset"
+    }
+  }, [barIsOpen])
   return (
     <>
       {!barIsOpen ? (
@@ -45,7 +53,7 @@ const NavBar: React.FC = () => {
       {barIsOpen && (
         <div
           onClick={() => setBarIsOpen(false)}
-          className=" hidden lg:block fixed inset-0 bg-gray-600 bg-opacity-20 z-20 "
+          className=" hidden lg:block fixed inset-0 bg-gray-600 bg-opacity-40 z-20 "
         ></div>
       )}
 

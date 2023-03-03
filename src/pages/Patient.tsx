@@ -1,3 +1,5 @@
+import { useEffect } from "react"
+
 import { useParams, useNavigate } from "react-router-dom"
 
 import { useDocument } from "../hooks/useDocument"
@@ -88,6 +90,14 @@ export default function Patient() {
     }
   }
 
+  useEffect(() => {
+    if (isHistoryFormOpen) {
+      document.body.style.overflow = "hidden"
+    } else if (!isHistoryFormOpen) {
+      document.body.style.overflow = "unset"
+    }
+  }, [isHistoryFormOpen])
+
   return (
     <>
       {patient && (
@@ -120,6 +130,7 @@ export default function Patient() {
             <>
               <div
                 onClick={() => setIsHistoryFormOpen(false)}
+                onScroll={(e) => e.stopPropagation()}
                 className="z-40 px-40 lg:px-36 md:px-24 sm:px-4 bg-gray-200 bg-opacity-80 fixed inset-0 "
               >
                 <button
