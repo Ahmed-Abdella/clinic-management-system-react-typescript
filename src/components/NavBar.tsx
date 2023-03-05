@@ -58,7 +58,7 @@ const NavBar: React.FC = () => {
       )}
 
       <div
-        className={`lg:z-30 flex flex-col w-48  fixed top-0 left-0 bottom-0 min-h-screen border-r lg:bg-sky-100 lg:translate-x-[-20rem] ${
+        className={`overflow-y-auto lg:z-30 flex flex-col w-48  fixed top-0 left-0 bottom-0 min-h-screen border-r lg:bg-sky-100 lg:translate-x-[-20rem] ${
           barIsOpen ? "lg:translate-x-0" : ""
         }  transition duration-500  [&_svg]:text-sky-600 `}
       >

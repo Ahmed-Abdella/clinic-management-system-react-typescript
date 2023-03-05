@@ -55,7 +55,7 @@ const PatientHistoryForm = ({
         <span>Diagnosis:</span>
 
         <textarea
-          className="bg-gray-50 h-48 mt-1 p-4 border-b border-sky-600  outline-none"
+          className="bg-gray-50 h-24 mt-1 p-4 border-b border-sky-600  outline-none"
           value={diagnosis}
           onChange={(e) => onDiagnosisChange(e.target.value)}
         ></textarea>
