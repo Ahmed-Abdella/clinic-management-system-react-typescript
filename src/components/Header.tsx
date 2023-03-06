@@ -27,7 +27,7 @@ const Header = () => {
         <span className="font-semibold">Dr. </span>
         {`${user?.displayName}`}
       </p>
-      <div className="ml-auto">
+      {/* <div className="ml-auto">
         <ul className=" flex items-center justify-center   [&>*]:[&>*]:px-2 [&>*]:[&>*]:py-2 [&>*]:[&>*]:rounded-lg    ">
           <li className="">
             <button
@@ -38,7 +38,7 @@ const Header = () => {
             </button>
           </li>
         </ul>
-      </div>
+      </div> */}
     </div>
   )
 }

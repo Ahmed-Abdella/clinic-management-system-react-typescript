@@ -41,12 +41,12 @@ const NavBar: React.FC = () => {
       {!barIsOpen ? (
         <IoIosMenu
           onClick={() => setBarIsOpen(true)}
-          className="drop-shadow-2xl hidden text-2xl cursor-pointer lg:block fixed top-4 left-4 z-40"
+          className=" hidden text-2xl cursor-pointer lg:block fixed top-4 left-4 z-40"
         />
       ) : (
         <IoMdArrowBack
           onClick={() => setBarIsOpen(false)}
-          className="hidden text-2xl lg:block cursor-pointer fixed top-4 left-4 z-40"
+          className="hidden text-xl lg:block cursor-pointer fixed top-4 left-4 z-40"
         />
       )}
 
